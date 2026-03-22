@@ -1,0 +1,73 @@
+### Add product
+POST http://localhost:3000/api/product-add
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODFiMTA4OGU3NjAxYjYyOTU3NDA1NTYiLCJpYXQiOjE3NDY2MDQ1NjEsImV4cCI6MTc0OTE5NjU2MX0.AO6kWeR-amMoorRr5RNXpkJ6I2ZOcFZ1h5KQ1DTCYTA
+
+{
+    "title": "Modern Portrait in Brown",
+    "description":
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed molestie sem sagittis felis ornare euismod. Proin egestas convallis nisl, in consectetur libero rhoncus at. Integer nec varius felis. Maecenas nec nulla ac neque facilisis fermentum non a elit. In eu sapien eu leo imperdiet maximus. Nulla bibendum congue felis, vulputate auctor dolor venenatis sit amet. Nunc fermentum congue fringilla. Nulla sit amet porta risus. Aliquam id gravida dolor, vitae accumsan erat. Mauris vel ultrices mi. Sed molestie metus laoreet purus pretium gravida. Proin non semper nulla. Praesent vel egestas orci. Sed porttitor nulla eu dolor imperdiet, fermentum cursus ex ultrices. In consectetur sagittis ex a auctor. Nunc varius diam eu viverra pulvinar.",
+    "artist": "Sophia Laurent",
+    "price": 2450.00,
+    "sellerName": "PMate2",
+    "image":
+      "/productPicture/Abstract-Painting-Modern-Art-1.jpg",
+    "dimensions": "45cm x 22cm x 8cm",
+    "material": "Linen",
+    "yearCreated": 1998,
+    "tags": ["Portrait", "Historical", "Classic"],
+    "auction": {
+      "isAuction": true
+    }
+}
+
+### Get product
+GET http://localhost:3000/api/product-get
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODIwZDlmNGI0ZWZiNTQyMWMyMTBmNTQiLCJpYXQiOjE3NDY5ODM2NDgsImV4cCI6MTc0OTU3NTY0OH0.exdzAL1s-U-yDXeNc-Twv4Km0jzur-xXIdSavHuwZL0
+
+### Get product by userId
+GET http://localhost:3000/api/product-get/6820da50b4efb5421c210f5f
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODIwZDlmNGI0ZWZiNTQyMWMyMTBmNTQiLCJpYXQiOjE3NDY5ODM2NDgsImV4cCI6MTc0OTU3NTY0OH0.exdzAL1s-U-yDXeNc-Twv4Km0jzur-xXIdSavHuwZL0
+
+### Edit by put product
+PUT http://localhost:3000/api/product-put/681da8b47118d603ecd8d3f9
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODE1Y2ZkYTc4Y2RjMjRlZDkzMDI1N2EiLCJpYXQiOjE3NDYyNjM5MjgsImV4cCI6MTc0ODg1NTkyOH0.X_Pdirz-ZNOxbqkK6HrXSpVJ3WgRJJx1Tp-SN93DgUc
+
+{
+    "title": "Edited Test Ling2 from rest",
+    "description":
+      "Edited Description Test Ling2 from rest",
+    "artist": "Test from Ling2",
+    "price": 2000,
+    "sellerName": "PMate2",
+    "image":
+      "dragon-tempura-sprint2/public/productPicture/Portrait-Painting-Modern-Art-2.jpg",
+    "dimensions": "142cm x 102cm x 4cm",
+    "material": "No matter",
+    "yearCreated": 1850,
+    "tags": ["Portrait", "Historical", "Classic"]
+}
+
+### Delete product by productId
+DELETE http://localhost:3000/api/product-delete/681b13799e2bff4d7fab3ec7
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODFiMTA4OGU3NjAxYjYyOTU3NDA1NTYiLCJpYXQiOjE3NDY2MDQ1NjEsImV4cCI6MTc0OTE5NjU2MX0.AO6kWeR-amMoorRr5RNXpkJ6I2ZOcFZ1h5KQ1DTCYTA
+
+### Get my product
+GET http://localhost:3000/api/my-products
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODFhZDY5YzU3ODhmZTUwOTNmMTEzMzkiLCJpYXQiOjE3NDY4MDY2MDEsImV4cCI6MTc0OTM5ODYwMX0.MRnA8q_GtyMO2l3sqvtTP5nDANxk_SamSJeGbAuR2_o
+
+###
+GET http://localhost:3000/api/product/681b198a9e2bff4d7fab3ed7
+
+###
+GET http://localhost:3000/api/products?genre=Modern
+Cookie: token=eeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODIwZDlmNGI0ZWZiNTQyMWMyMTBmNTQiLCJpYXQiOjE3NDY5ODM0MTgsImV4cCI6MTc0OTU3NTQxOH0.mUBAs9CxHjSO48JiGRp6x_yS5zmzHwAxmLT_KQPPafs
+
+### Get all auction product
+GET http://localhost:3000/api/product-get-auction
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODFiMTA4OGU3NjAxYjYyOTU3NDA1NTYiLCJpYXQiOjE3NDY2MDQ1NjEsImV4cCI6MTc0OTE5NjU2MX0.AO6kWeR-amMoorRr5RNXpkJ6I2ZOcFZ1h5KQ1DTCYTA

@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Dragon tempura</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/icon?family=Material+Icons"
+/>
+
+<form>
+  <input required /> 
+</form>
+  </head>
+  <a href="./src/Layout.jsx">go</a>
+  <body class="relative text-[var(--primary-color-4)] font-sans min-w-[550px] w-full">
+    <!-------------------- NAV ------------------------------------->
+    <nav class="bg-[#62483A] text-stone-200">
+      <!-- nav-mobile -->
+      <div class="flex flex-col items-center justify-center w-full p-4 md:hidden">
+        <div class="flex items-center justify-center w-full">
+            <img src="logo/logo.png" alt="Collectico Logo" class="w-7 h-7">
+            <h2 class="text-l font-bold ml-2">COLLECTICO</h2>
+        </div>
+        <div class="w-11/12 h-[0.5px] bg-stone-200 mx-auto mt-4"></div>
+        <div class="flex pt-4 w-11/12 justify-between">
+            <div class="flex items-start">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 cursor-pointer" id="hamburger-icon">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+            </div>
+            <div class="flex items-end space-x-4">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                </svg>
+                <button  onclick="menuProfile()">
+                  <svg id="iconChangeMobile" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                  </svg>
+                </button>
+                <a href="./myorder.html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+                </svg>
+                </a>
+                <a href="./cart.html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                  </svg>
+                </a>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden flex-col items-center justify-between mt-4 space-x-3 ">
+            <a href="#home">Home</a>
+            <a href="#shop">Shop</a>
+            <a href="#auction">Auction</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+            const mobileMenu = document.getElementById('mobile-menu');
+            hamburgerIcon.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                hamburgerIcon.classList.toggle('rotate-45');
+            });
+        });
+    </script>
+      <!-- nav-pc -->
+      <div class="hidden md:block p-2">
+        <div class="mx-auto flex items-center justify-between">
+            <div class="flex items-center pl-4">
+              <img src="logo/logo.png" alt="Collectico Logo" class="w-10 h-10">
+              <h2 class=" text-2xl font-bold ml-2">COLLECTICO</h2>
+            </div>
+            <div class="hidden md:flex space-x-10">
+                <a href="#home" class="hover:text-white">Home</a>
+                <a href="#shop" class="hover:text-white">Shop</a>
+                <a href="#auction" class="hover:text-white">Auction</a>
+                <a href="#about" class="hover:text-white">About</a>
+                <a href="#contact" class="hover:text-white">Contact</a>
+            </div>
+            <div class="flex items-center space-x-4 pr-6">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+              </svg>
+              <button  onclick="menuProfile()">
+                <svg id="iconChangeDesktop" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                </svg>
+              </button>
+              <a href="./myorder.html">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+              </svg>
+              </a>
+              <a href="./cart.html">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                </svg>
+              </a>
+            </div>
+        </div>
+      </div>
+      </nav>
+      <div id="menuProfile" class="z-10 hidden flex flex-col absolute md:top-[44px] md:right-[30px] max-md:top-[105px] max-md:right-[30px] max-w-[220px]  bg-[#F2EEE7] border border-[#584640] shadow-lg rounded ">
+        <div class="flex pl-[16px] pr-[16px] py-[8px] gap-[8px] items-center bg-[#E9E2D6] rounded-t">
+            <img src="./productPicture/Portrait-Painting-Contemporary-Art-3.jpg" class="rounded-full w-[36px] h-[36px] border border-[#584640]">
+            <p class="text-[#584640] font-semibold">Dragon Tempura</p>
+        </div>
+        <a href="./login.html" class="pl-[16px]  py-[4px] text-[#584640] font-semibold border-t-[0.8px] border-white hover:bg-[#90776e] hover:text-[#F2EEE7]">Account</a>
+        <a href="./myorder.html" class="pl-[16px]  py-[4px] text-[#584640] font-semibold  hover:bg-[#90776e] hover:text-[#F2EEE7]">Order</a>
+        <a href="" class="pl-[16px]  py-[4px] text-[#584640] font-semibold hover:bg-[#90776e] hover:text-[#F2EEE7]">Setting</a>
+        <a href="" class="pl-[16px]  py-[4px] text-[#584640] font-semibold border-t-[0.8px] border-white hover:bg-[#90776e] hover:text-[#F2EEE7]">Log Out</a>
+      </div>
+    <script>
+      function menuProfile() {
+      const menu = document.getElementById("menuProfile");
+      const iconDesktop = document.getElementById("iconChangeDesktop"); 
+      const iconMobile = document.getElementById("iconChangeMobile");
+      menu.classList.toggle("hidden");
+      if (iconDesktop.getAttribute("fill") === "none") {
+        iconDesktop.setAttribute("fill","#F2EEE7");
+      }
+     else  iconDesktop.setAttribute("fill","none");
+     if (iconMobile.getAttribute("fill") === "none") {
+        iconMobile.setAttribute("fill","#F2EEE7");
+      }
+     else  iconMobile.setAttribute("fill","none");
+      }
+    </script>
+    <!-- -----------------------HERO----------------------------------------->
+    <!-- <figure class="md:hidden relative bg-primary2 flex justify-end w-full h-80 bg-opacity-80">
+      <img src="/logo/logo.png" alt="logo" class="absolute left-6 top-6 w-[14%] contrast-125 drop-shadow-md hover:rotate-45 transition-transform duration-700">  
+      <img src="/productPicture/hero-picture.png" alt="hero-mobile" class="h-80 object-right opacity-80">
+    </figure> -->
+
+    <!----------------------- HOME SECTION-------------------------------------------->
+    <header class="relative w-full">
+      <section
+        id="home"
+        class="w-full h-[500px] md:h-[450px] bg-primary1 px-[36px] flex items-center md:gap-10 md:pr-0"
+      >
+        <article
+          class="min-w-[433px] md:w-[50%] flex flex-col gap-[15px] my-[52px]"
+        >
+          <p class="font-bold">Luxury Collection</p>
+          <h1 class="text-[2.5rem] font-bold">
+            Express Your Style with Collectico
+          </h1>
+          <p
+            class="-mt-3 text-[1.5rem] font-semibold text-[var(--primary-color-4)] opacity-50"
+          >
+            Where Every Artwork Tells a Story.
+          </p>
+          <p class="text-[1rem]">
+            Explore our limited edition fine art collection, featuring Portrait,
+            Landscape, Genre, Abstract, and Historical paintings across Classic,
+            Modern, and Contemporary styles. Transform your space with timeless
+            beauty.
+          </p>
+          <!-- <div class="button flex gap-[15px] h-full mt-3">
+            <button
+              class="h-[39px] px-8 bg-[var(--chocolate-color)] border-1 rounded-md text-[0.875rem] tracking-wide hover:cursor-pointer hover:bg-[var(--hoverBgButton-color)] hover:border hover:border-[var(--chocolate-color)] hover:text-[var(--hoverTextButton-color)] transition duration-300  text-[var(--mainSectionRegister-color)]"
+            >
+              Explore Collection
+            </button>
+            <button
+            class="h-[39px] px-8 bg-[var(--chocolate-color)] border-1 rounded-md text-[0.875rem] tracking-wide hover:cursor-pointer hover:bg-[var(--hoverBgButton-color)] hover:border hover:border-[var(--chocolate-color)] hover:text-[var(--hoverTextButton-color)] transition duration-300  text-[var(--mainSectionRegister-color)]"
+            >
+              Limited Editions
+            </button>
+          </div> -->
+        </article>
+        <figure class="w-[50%] h-full hidden md:block">
+          <img
+            src="./productPicture/hero-picture.png"
+            alt="hero"
+            class="h-full w-full contrast-75 drop-shadow-2xl object-cover object-left"
+          />
+        </figure>
+      </section>
+    </header>
+
+    <main>
+      <!---------------- SHOP SECTION -------------------------------------------------------->
+      <section
+        id="shop"
+        class="relative w-full h-[650px] md:h-[555px] bg-primary2 flex flex-col pt-[33px] px-[28px] pb-[30px] md:pb-0"
+      >
+        <article class="title flex flex-col gap-[16px] items-center mb-4 md:mb-0">
+          <h2 class="text-[1.5rem] font-bold">Our Collections</h2>
+          <p class="w-[80%]">
+            Explore our carefully curated categories featuring the finest
+            limited edition pieces from around the world.
+          </p>
+        </article>
+
+        <!-- Left-Right Arrow Button -->
+        <div
+          id="arrow-container"
+          class="hidden md:flex gap-2 absolute top-[85px] right-[20px]"
+        >
+          <div
+            id="arrow-left"
+            class="flex justify-center items-center w-8 aspect-square p-1 rounded-full bg-primary1 text-[var(--primary-color-4)] hover:bg-[var(--primary-color-4)] hover:text-[var(--primary-color-1)] shadow-md shadow-gray-400 hover:cursor-pointer transition duration-300"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.9"
+              stroke="currentColor"
+              class="size-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+              />
+            </svg>
+          </div>
+          <div
+            id="arrow-right"
+            class="flex justify-center items-center w-8 aspect-square p-1 rounded-full bg-primary1 text-[var(--primary-color-4)] hover:bg-[var(--primary-color-4)] hover:text-[var(--primary-color-1)] shadow-md shadow-gray-400 hover:cursor-pointer transition duration-300"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.9"
+              stroke="currentColor"
+              class="size-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Picture container -->
+        <div
+          class="picture-container py-[17px] flex gap-[24px] h-[70%] overflow-auto"
+        >
+          <!-- Figure 1 -->
+          <figure
+            class="w-1/4 min-w-[300px] relative mb-2 overflow-hidden shadow-md shadow-gray-500 rounded-md"
+          >
+            <a href="./product.html">
+              <img
+                src="./productPicture/Portrait-Painting-Classic-Art-1.jpg"
+                alt=""
+                class="bg-secondary2 h-full w-full object-cover"
+              />
+              <div
+                class="absolute inset-0 bg-gray-900 rounded-md opacity-0 hover:opacity-50 hover:cursor-pointer transition duration-300"
+              ></div>
+            </a>
+          </figure>
+          <!-- Figure 2 -->
+          <figure
+            class="w-1/4 min-w-[300px] relative mb-2 overflow-hidden shadow-md shadow-gray-500 rounded-md"
+          >
+            <a href="./product.html">
+              <img
+                src="./productPicture/Abstract-Painting-Contemporary-Art-4.jpg"
+                alt=""
+                class="bg-secondary2 h-full w-full object-cover"
+              />
+              <div
+                class="absolute inset-0 bg-gray-900 rounded-md opacity-0 hover:opacity-50 hover:cursor-pointer transition duration-300"
+              ></div>
+            </a>
+          </figure>
+          <!-- Figure 3 -->
+          <figure
+            class="w-1/4 min-w-[300px] relative mb-2 overflow-hidden shadow-md shadow-gray-500 rounded-md"
+          >
+            <a href="./product.html">
+              <img
+                src="./productPicture/Abstract-Painting-Contemporary-Art-3.jpg"
+                alt=""
+                class="bg-secondary2 h-full w-full object-cover"
+              />
+              <div
+                class="absolute inset-0 bg-gray-900 rounded-md opacity-0 hover:opacity-50 hover:cursor-pointer transition duration-300"
+              ></div>
+            </a>
+          </figure>
+          <!-- Figure 4 -->
+          <figure
+            class="w-1/4 min-w-[300px] relative mb-2 overflow-hidden shadow-md shadow-gray-500 rounded-md"
+          >
+            <a href="./product.html">
+              <img
+                src="./productPicture/Landscape-Painting-Classic-Art-5.jpg"
+                alt=""
+                class="bg-secondary2 h-full w-full object-cover"
+              />
+              <div
+                class="absolute inset-0 bg-gray-900 rounded-md opacity-0 hover:opacity-50 hover:cursor-pointer transition duration-300"
+              ></div>
+            </a>
+          </figure>
+        </div>
+        <!-- Shop Button -->
+        <div class="button self-center py-4">
+          <a href="./shoptib.html">
+            <button
+              class="h-[39px] px-8 bg-[var(--chocolate-color)] border-1 rounded-md text-[0.875rem] tracking-wide hover:cursor-pointer hover:bg-[var(--hoverBgButton-color)] hover:border hover:border-[var(--chocolate-color)] hover:text-[var(--hoverTextButton-color)] transition duration-300  text-[var(--mainSectionRegister-color)]"
+            >
+              Explore Our Shop
+            </button>
+          </a>
+        </div>
+      </section>
+
+      <!---------------- AUCTION SECTION -------------------------------------------------------->
+      <section
+        id="auction"
+        class="relative w-full h-[900px] md:h-[802px] bg-primary1 flex flex-col py-[33px] px-[28px]"
+      >
+        <div id="auction-title" class="flex flex-col gap-[20px] items-start">
+          <h2 class="text-[1.5rem] font-bold">Exclusive Auction Pieces</h2>
+          <p class="w-[90%]">
+            Discover our exclusive collection of rare, highly sought-after
+            pieces, each selected for its exceptional craftsmanship and unique
+            artistic vision.
+          </p>
+        </div>
+
+        <!-- Left-Right Arrow Button -->
+        <div
+          id="arrow-container"
+          class="hidden md:flex gap-2 absolute top-[80px] right-[20px]"
+        >
+          <div
+            id="arrow-left"
+            class="flex justify-center items-center w-8 aspect-square p-1 rounded-full bg-primary2 text-[var(--primary-color-4)] hover:bg-[var(--primary-color-4)] hover:text-[var(--primary-color-1)] shadow-md shadow-gray-400 hover:cursor-pointer transition duration-300"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.9"
+              stroke="currentColor"
+              class="size-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+              />
+            </svg>
+          </div>
+          <div
+            id="arrow-right"
+            class="flex justify-center items-center w-8 aspect-square p-1 rounded-full bg-primary2 text-[var(--primary-color-4)] hover:bg-[var(--primary-color-4)] hover:text-[var(--primary-color-1)] shadow-md shadow-gray-400 hover:cursor-pointer transition duration-300"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.9"
+              stroke="currentColor"
+              class="size-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Aution-Card-Container -->
+        <div
+          id="card-container"
+          class="my-[24px] flex gap-[24px] md:min-h-[75%] min-h-[60%] overflow-auto"
+        >
+          <!-- card1 -->
+          <article
+            id="item-card"
+            class="relative bg-secondary1 w-1/4 min-w-[300px] flex flex-col justify-between mb-8 rounded-md overflow-hidden shadow-xl"
+          >
+            <div
+              id="gray-screen"
+              class="absolute inset-0 w-full h-full bg-gray-900 rounded opacity-0 hover:opacity-50 hover:cursor-pointer transition duration-300"
+            ></div>
+            <figure class="w-full h-[65%]">
+              <img
+                src="./productPicture/Abstract-Painting-Modern-Art-1.jpg"
+                alt=""
+                class="w-full h-full object-cover bg-black"
+              />
+            </figure>
+            <div id="content" class="p-[10px] pt-0 h-[18%]">
+              <h3 class="font-semibold text-[1.4rem]">
+                Modern Portrait in Brown
+              </h3>
+              <p class="text-[1.1rem]">By Sophia Laurent</p>
+              <p class="text-[1.35rem] pt-2.5">$2,450.00</p>
+            </div>
+            <div
+              id="remaining-time"
+              class="h-[12%] flex self-end gap-[8px] pb-[5px] pr-3"
+            >
+              <div id="days" class="flex flex-col items-center gap-[4px]">
+                <div class="bg-[#623A3A] bg-opacity-80 flex justify-center items-center h-[30px] w-[36px] rounded">
+                  <p class="text-white font-semibold">
+                    01
+                  </p>
+                </div>
+                <p class="text-[0.875rem]">Days</p>
+              </div>
+
+              <div class="">:</div>
+
+              <div id="hours" class="flex flex-col items-center gap-[4px]">
+                <div class="bg-[#623A3A] bg-opacity-80 flex justify-center items-center h-[30px] w-[36px] rounded">
+                  <p class="text-white font-semibold">
+                    03
+                  </p>
+                </div>
+                <p class="text-[0.875rem]">Hours</p>
+              </div>
+
+              <div class="">:</div>
+
+              <div id="min" class="flex flex-col items-center gap-[4px]">
+                <div class="bg-[#623A3A] bg-opacity-80 flex justify-center items-center h-[30px] w-[36px] rounded">
+                  <p class="text-white font-semibold">
+                    45
+                  </p>
+                </div>
+                <p class="text-[0.875rem]">Min</p>
+              </div>
+
+              <div>:</div>
+
+              <div id="sec" class="flex flex-col items-center gap-[4px]">
+                <div class="bg-[#623A3A] bg-opacity-80 flex justify-center items-center h-[30px] w-[36px] rounded">
+                  <p class="text-white font-semibold">
+                    00
+                  </p>
+                </div>
+                <p class="text-[0.875rem]">Sec</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- card 2 -->
+          <article
+            id="item-card"
+            class="relative bg-secondary1 w-1/4 min-w-[300px] flex flex-col justify-between mb-8 rounded-md overflow-hidden shadow-xl"
+          >
+            <div
+              id="gray-screen"
+              class="absolute inset-0 w-full h-full bg-gray-900 rounded opacity-0 hover:opacity-50 hover:cursor-pointer transition duration-300"
+            ></div>
+            <figure class="w-full h-[65%]">
+              <img
+                src="./productPicture/Abstract-Painting-Classic-Art-5.jpg"
+                alt=""
+                class="w-full h-full object-cover bg-black"
+              />
+            </figure>
+            <div id="content" class="p-[10px] pt-0 h-[18%]">
+              <h3 class="font-semibold text-[1.4rem]">
+                Faint Shades of Silence
+              </h3>
+              <p class="text-[1.1rem]">By Marcus Aurelio</p>
+              <p class="text-[1.35rem] pt-2.5">$3,870.00</p>
+            </div>
+            <div
+              id="remaining-time"
+              class="h-[12%] flex self-end gap-[8px] pb-[5px] pr-3"
+            >
+              <div id="days" class="flex flex-col items-center gap-[4px]">
+                <div class="bg-[#623A3A] bg-opacity-80 flex justify-center items-center h-[30px] w-[36px] rounded">
+                  <p class="text-white font-semibold">
+                    01
+                  </p>
+                </div>
+                <p class="text-[0.875rem]">Days</p>
+              </div>
+
+              <div class="">:</div>
+
+              <div id="hours" class="flex flex-col items-center gap-[4px]">
+                <div class="bg-[#623A3A] bg-opacity-80 flex justify-center items-center h-[30px] w-[36px] rounded">
+                  <p class="text-white font-semibold">
+                    29
+                  </p>
+                </div>
+                <p class="text-[0.875rem]">Hours</p>
+              </div>
+
+              <div class="">:</div>
+
+              <div id="min" class="flex flex-col items-center gap-[4px]">
+                <div class="bg-[#623A3A] bg-opacity-80 flex justify-center items-center h-[30px] w-[36px] rounded">
+                  <p class="text-white font-semibold">
+                    03
+                  </p>
+                </div>
+                <p class="text-[0.875rem]">Min</p>
+              </div>
+
+              <div>:</div>
+
+              <div id="sec" class="flex flex-col items-center gap-[4px]">
+                <div class="bg-[#623A3A] bg-opacity-80 flex justify-center items-center h-[30px] w-[36px] rounded">
+                  <p class="text-white font-semibold">
+                    00
+                  </p>
+                </div>
+                <p class="text-[0.875rem]">Sec</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- card 3 -->
+          <article
+            id="item-card"
+            class="relative bg-secondary1 w-1/4 min-w-[300px] flex flex-col justify-between mb-8 rounded-md overflow-hidden shadow-xl"
+          >
+            <div
+              id="gray-screen"
+              class="absolute inset-0 w-full h-full bg-gray-900 rounded opacity-0 hover:opacity-50 hover:cursor-pointer transition duration-300"
+            ></div>
+            <figure class="w-full h-[65%]">
+              <img
+                src="./productPicture/Portrait-Painting-Modern-Art-2.jpg"
+                alt=""
+                class="w-full h-full object-cover bg-black"
+              />
+            </figure>
+            <div id="content" class="p-[10px] pt-0 h-[18%]">
+              <h3 class="font-semibold text-[1.4rem]">Grace in Elegance</h3>
+              <p class="text-[1.1rem]">By Isabella Moretti</p>
+              <p class="text-[1.35rem] pt-2.5">$5,620.00</p>
+            </div>
+            <div
+              id="remaining-time"
+              class="h-[12%] flex self-end gap-[8px] pb-[5px] pr-3"
+            >
+              <div id="days" class="flex flex-col items-center gap-[4px]">
+                <div class="bg-[#623A3A] bg-opacity-80 flex justify-center items-center h-[30px] w-[36px] rounded">
+                  <p class="text-white font-semibold">
+                    00
+                  </p>
+                </div>
+                <p class="text-[0.875rem]">Days</p>
+              </div>
+
+              <div class="">:</div>
+
+              <div id="hours" class="flex flex-col items-center gap-[4px]">
+                <div class="bg-[#623A3A] bg-opacity-80 flex justify-center items-center h-[30px] w-[36px] rounded">
+                  <p class="text-white font-semibold">
+                    02
+                  </p>
+                </div>
+                <p class="text-[0.875rem]">Hours</p>
+              </div>
+
+              <div class="">:</div>
+
+              <div id="min" class="flex flex-col items-center gap-[4px]">
+                <div class="bg-[#623A3A] bg-opacity-80 flex justify-center items-center h-[30px] w-[36px] rounded">
+                  <p class="text-white font-semibold">
+                    15
+                  </p>
+                </div>
+                <p class="text-[0.875rem]">Min</p>
+              </div>
+
+              <div>:</div>
+
+              <div id="sec" class="flex flex-col items-center gap-[4px]">
+                <div class="bg-[#623A3A] bg-opacity-80 flex justify-center items-center h-[30px] w-[36px] rounded">
+                  <p class="text-white font-semibold">
+                    00
+                  </p>
+                </div>
+                <p class="text-[0.875rem]">Sec</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- card 4 -->
+          <article
+            id="item-card"
+            class="relative bg-secondary1 w-1/4 min-w-[300px] flex flex-col justify-between mb-8 rounded-md overflow-hidden shadow-xl"
+          >
+            <div
+              id="gray-screen"
+              class="absolute inset-0 w-full h-full bg-gray-900 rounded opacity-0 hover:opacity-50 hover:cursor-pointer transition duration-300"
+            ></div>
+            <figure class="w-full h-[65%]">
+              <img
+                src="./productPicture/Historical-Painting-Classic-Art-2.jpg"
+                alt=""
+                class="w-full h-full object-cover bg-black"
+              />
+            </figure>
+            <div id="content" class="p-[10px] pt-0 h-[18%]">
+              <h3 class="font-semibold text-[1.4rem]">Wisdom of the Ages</h3>
+              <p class="text-[1.1rem]">By Pietro Bernini</p>
+              <p class="text-[1.35rem] pt-2.5">$6,350.00</p>
+            </div>
+            <div
+              id="remaining-time"
+              class="h-[12%] flex self-end gap-[8px] pb-[5px] pr-3"
+            >
+              <div id="days" class="flex flex-col items-center gap-[4px]">
+                <div class="bg-[#623A3A] bg-opacity-80 flex justify-center items-center h-[30px] w-[36px] rounded">
+                  <p class="text-white font-semibold">
+                    00
+                  </p>
+                </div>
+                <p class="text-[0.875rem]">Days</p>
+              </div>
+
+              <div class="">:</div>
+
+              <div id="hours" class="flex flex-col items-center gap-[4px]">
+                <div class="bg-[#623A3A] bg-opacity-80 flex justify-center items-center h-[30px] w-[36px] rounded">
+                  <p class="text-white font-semibold">
+                    00
+                  </p>
+                </div>
+                <p class="text-[0.875rem]">Hours</p>
+              </div>
+
+              <div class="">:</div>
+
+              <div id="min" class="flex flex-col items-center gap-[4px]">
+                <div class="bg-[#623A3A] bg-opacity-80 flex justify-center items-center h-[30px] w-[36px] rounded">
+                  <p class="text-white font-semibold">
+                    59
+                  </p>
+                </div>
+                <p class="text-[0.875rem]">Min</p>
+              </div>
+
+              <div>:</div>
+
+              <div id="sec" class="flex flex-col items-center gap-[4px]">
+                <div class="bg-[#623A3A] bg-opacity-80 flex justify-center items-center h-[30px] w-[36px] rounded">
+                  <p class="text-white font-semibold">
+                    01
+                  </p>
+                </div>
+                <p class="text-[0.875rem]">Sec</p>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="button self-center">
+          <button
+            class="h-[39px] px-12 bg-[var(--chocolate-color)] border-1 rounded-md text-[0.875rem] tracking-wide hover:cursor-pointer hover:bg-[var(--hoverBgButton-color)] hover:border hover:border-[var(--chocolate-color)] hover:text-[var(--hoverTextButton-color)] transition duration-300  text-[var(--mainSectionRegister-color)]"
+          >
+            Go Auction
+          </button>
+        </div>
+      </section>
+
+      <!------------------------ REVIEW SECTION ------------------------------------->
+      <section
+        id="review"
+        class="relative flex flex-col w-full h-[480px] py-[33px] bg-primary3"
+      >
+        <article class="flex flex-col h-[20%] gap-[20px] items-center mb-4">
+          <h2 class="text-[1.5rem] font-bold">Collector Testimonials</h2>
+          <p class="w-[80%] text-center">
+            Hear from our distinguished collectors about their experiences with
+            our limited edition pieces
+          </p>
+        </article>
+
+        <!-- Left-Right Arrow Button -->
+        <div
+          id="arrow-container"
+          class="absolute top-[85px] right-[18px] hidden md:flex gap-2"
+        >
+          <div
+            id="arrow-left"
+            class="flex justify-center items-center w-8 aspect-square p-1 rounded-full bg-primary1 text-[var(--primary-color-4)] hover:bg-[var(--primary-color-4)] hover:text-[var(--primary-color-1)] shadow-md shadow-gray-400 hover:cursor-pointer transition duration-300"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.9"
+              stroke="currentColor"
+              class="size-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+              />
+            </svg>
+          </div>
+          <div
+            id="arrow-right"
+            class="flex justify-center items-center w-8 aspect-square p-1 rounded-full bg-primary1 text-[var(--primary-color-4)] hover:bg-[var(--primary-color-4)] hover:text-[var(--primary-color-1)] shadow-md shadow-gray-400 hover:cursor-pointer transition duration-300"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.9"
+              stroke="currentColor"
+              class="size-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Review-card-container -->
+        <div
+          id="review-container"
+          class="-ml-24 my-6 flex gap-[16px] h-[80%] overflow-auto"
+        >
+          <!-- Review-card-1 -->
+          <article
+            id="review-card"
+            class="flex flex-col min-w-[400px] w-2/6 gap-2 p-4 py-6 mb-5 bg-secondary1 rounded-lg text-[var(--secondary-color-3)]"
+          >
+            <!-- Star-container -->
+            <div id="star-container" class="flex w-full h-[20%]">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-6"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-6"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-6"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-6"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-6"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <!-- content -->
+            <div class="w-full h-[50%] italic text-[0.95rem]">
+              <p>
+                “The Midnight Horizon artwork completely elevated my space. The
+                way it changes in different lighting adds depth and elegance to
+                the room. A truly unique and stunning piece.”
+              </p>
+            </div>
+            <!-- Author -->
+            <div class="flex items-center w-full h-[30%] gap-[16px]">
+              <figure class="bg-secondary3 h-[80%] aspect-square rounded-full">
+                <img src="" alt="" />
+              </figure>
+              <div class="flex flex-col justify-center w-[85%] h-full">
+                <p class="font-semibold text-[var(--primary-color-4)]">
+                  Jonathan Richards
+                </p>
+                <p class="text-[0.95rem]">Art Collector, New York</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Review-card-2 -->
+          <article
+            id="review-card"
+            class="flex flex-col min-w-[400px] w-2/6 gap-2 px-4 py-6 mb-5 bg-secondary1 rounded-lg text-[var(--secondary-color-3)]"
+          >
+            <!-- Star-container -->
+            <div id="star-container" class="flex w-full h-[20%]">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-6"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-6"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-6"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-6"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-6"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <!-- content -->
+            <div class="w-full h-[50%] italic text-[0.95rem]">
+              <p>
+                "The Golden Leaf Art transformed my living space completely. The
+                way it catches the light throughout the day creates a magical
+                ambiance. Truly a one-of-a-kind piece."
+              </p>
+            </div>
+            <!-- Author -->
+            <div class="flex items-center w-full h-[30%] gap-[16px]">
+              <figure class="bg-secondary3 h-[80%] aspect-square rounded-full">
+                <img src="" alt="" />
+              </figure>
+              <div class="flex flex-col justify-center w-[85%] h-full">
+                <p class="font-semibold text-[var(--primary-color-4)]">
+                  Sophia Miller
+                </p>
+                <p class="text-[0.95rem]">Interior Designer, London</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Review-card-3 -->
+          <!-- <article id="review-card" class="w-2/6 bg-secondary2"></article> -->
+          <article
+            id="review-card"
+            class="flex flex-col min-w-[400px] w-2/6 gap-2 px-4 py-6 mb-5 bg-secondary1 rounded-lg text-[var(--secondary-color-3)]"
+          >
+            <!-- Star-container -->
+            <div id="star-container" class="flex w-full h-[20%]">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-6"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-6"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-6"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-6"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-6"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <!-- content -->
+            <div class="w-full h-[50%] italic text-[0.95rem]">
+              <p>
+                "The Royal Bloom art piece transformed my room with its striking
+                beauty. The colors shift with the light, bringing a peaceful,
+                yet sophisticated vibe. A remarkable work of art."
+              </p>
+            </div>
+            <!-- Author -->
+            <div class="flex items-center w-full h-[30%] gap-[16px]">
+              <figure class="bg-secondary3 h-[80%] aspect-square rounded-full">
+                <img src="" alt="" />
+              </figure>
+              <div class="flex flex-col justify-center w-[85%] h-full">
+                <p class="font-semibold text-[var(--primary-color-4)]">
+                  Alexandre Dupont
+                </p>
+                <p class="text-[0.95rem]">Estate Owner, Paris</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Review-card-4 -->
+          <!-- <article id="review-card" class="w-1/6 bg-secondary2"></article> -->
+          <article
+            id="review-card"
+            class="flex flex-col min-w-[400px] w-2/6 gap-2 px-4 py-6 mb-5 bg-secondary1 rounded-lg text-[var(--secondary-color-3)]"
+          >
+            <!-- Star-container -->
+            <div id="star-container" class="flex w-full h-[20%]">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-6"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-6"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-6"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-6"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-6"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <!-- content -->
+            <div class="w-full h-[50%] italic text-[0.95rem]">
+              <p>
+                “The Serenity Landscape painting has completely redefined my
+                space. Its calming tones and subtle details bring a sense of
+                tranquility that shifts throughout the day. A truly exquisite
+                work.”
+              </p>
+            </div>
+            <!-- Author -->
+            <div class="flex items-center w-full h-[30%] gap-[16px]">
+              <figure class="bg-secondary3 h-[80%] aspect-square rounded-full">
+                <img src="" alt="" />
+              </figure>
+              <div class="flex flex-col justify-center w-[85%] h-full">
+                <p class="font-semibold text-[var(--primary-color-4)]">
+                  Jonathan Richards
+                </p>
+                <p class="text-[0.95rem]">Art Collector, New York</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!------------------------ ABOUT SECTION ------------------------------------->
+      <section
+        id="about"
+        class="w-full h-[1029px] bg-secondary1 flex flex-row md:gap-20 gap-10 py-[50px] md:px-[54.5px] px-10 items-center"
+      >
+        <article class="flex flex-col gap-4 w-[50%]">
+          <h2 class="text-[1.5rem] font-bold">About Our Passion</h2>
+          <p>
+            At COLLECTICO, we curate only the most exceptional limited edition
+            art pieces and display items from around the world. Each piece in
+            our collection tells a unique story and brings unparalleled beauty
+            to any space.
+          </p>
+          <p>
+            Our team of experts travels the globe to discover talented artists
+            and master craftsmen who create these extraordinary works. We pride
+            ourselves on offering pieces that are not only visually stunning but
+            also meaningful and enduring.
+          </p>
+          <p>
+            Our logo embodies the belief that art has the power to inspire
+            change, challenge perspectives, and unite humanity. It symbolizes
+            how creativity can break barriers, give voice to the unheard, and
+            bring equality to the world.
+          </p>
+          <p>
+            At COLLECTICO, we honor this power by curating works that don’t just
+            decorate spaces—they tell stories, ignite emotions, and stand as
+            timeless symbols of resilience and hope.
+          </p>
+          <button
+            class="h-[39px] w-fit px-12 bg-[var(--chocolate-color)] border-1 rounded-md text-[0.875rem] tracking-wide hover:cursor-pointer hover:bg-[var(--hoverBgButton-color)] hover:border hover:border-[var(--chocolate-color)] hover:text-[var(--hoverTextButton-color)] transition duration-300  text-[var(--mainSectionRegister-color)]"
+          >
+            Our Story
+          </button>
+        </article>
+        <figure class="w-[50%] h-full flex gap-[12px]">
+          <img
+            src="./productPicture/Genre-Painting-Classic-Art-4.jpg"
+            alt=""
+            class="bg-secondary2 md:w-[50%] h-full object-cover overflow-hidden brightness-110"
+          />
+          <!-- the two right pictures -->
+          <div class="w-[50%] h-full hidden md:visible md:flex md:flex-col md:gap-[12px]">
+            <img
+              src="./productPicture/Historical-Painting-Contemporary-Art-1.jpg"
+              alt=""
+              class="bg-secondary2 w-full h-full object-cover overflow-hidden"
+            />
+            <img
+              src="./productPicture/Portrait-Painting-Classic-Art-2.jpg"
+              alt=""
+              class="bg-secondary2 w-full h-full object-cover overflow-hidden backdrop-brightness-95"
+            />
+          </div>
+        </figure>
+      </section>
+    </main>
+
+    <!-- <footer
+      id="contact"
+      class="min-w-[1024px] w-full h-[256.5px] bg-primary4 flex flex-col py-[33px]"
+    ></footer> -->
+
+    <footer
+      id="contact"
+      class="w-full bg-[#584640] text-white text-[10px]"
+    >
+      <div class="grid grid-cols-2 grid-rows-2 md:hidden">
+        <div
+          class="flex items-center justify-center border-white border-b border-r"
+        >
+          <div class="p-3">
+            <img
+              src="logo/logo.png"
+              alt="Collectico Logo"
+              class="w-20 h-20 object-contain"
+            />
+          </div>
+          <div>
+            <h2>Visit</h2>
+            <p>The Collection</p>
+            <p>Exhibitions and Events</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 border-white border-b">
+          <div class="ml-5 p-3">
+            <h2 class="font-extrabold pb-4">Support us</h2>
+            <p>Membership</p>
+            <p>Luminary</p>
+            <p>Sponsorship</p>
+          </div>
+          <div class="p-3">
+            <img src="logo/generation.png" alt="Collectico Logo" />
+            <img src="logo/genkx.png" alt="Collectico Logo" />
+          </div>
+        </div>
+        <div class="flex items-center justify-center border-white border-r">
+          <div class="p-3">
+            <img
+              src="logo/map.png"
+              alt="Collectico Logo"
+              class="w-20 h-20 object-contain"
+            />
+          </div>
+          <div>
+            <h2>159 East Movest Street Thailand, IL 60603</h2>
+          </div>
+        </div>
+        <div class="grid grid-cols-3">
+          <div
+            class="flex items-center justify-center col-span-2 border-white border-r"
+          >
+            <div class="">
+              <h2 class="font-extrabold pb-2">About us</h2>
+              <p>Mission and history</p>
+              <p>Leadership</p>
+              <p>Financial reporting</p>
+            </div>
+          </div>
+          <div class="grid items-center justify-center">
+            <h2 class="font-extrabold">Follow us</h2>
+            <div class="grid items-center justify-center space-y-3">
+              <a href="#">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-3 w-3"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"
+                  />
+                </svg>
+              </a>
+              <a href="#">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-3 w-3"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"
+                  />
+                </svg>
+              </a>
+              <a href="#">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-3 w-3"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- pc-footer -->
+      <div class="mx-10 px-4 py-5 text-sm hidden md:block">
+        <div class="grid grid-cols-4 gap-8">
+          <div class="flex flex-col space-y-4">
+            <div class="flex items-center">
+              <img src="logo/logofull.png" alt="Collectico Logo" class="w-20" />
+            </div>
+            <div class="mt-4">
+              <p>Visit</p>
+              <p>The Collection</p>
+              <p>Exhibitions and Events</p>
+            </div>
+          </div>
+          <div>
+            <img src="logo/map.png" alt="Collectico Logo" class="w-20" />
+            <div class="mt-4">
+              <p>159 East Movest Street</p>
+              <p>Thailand, IL 60603</p>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-base font-semibold mb-4">Support Us</h3>
+            <ul class="space-y-2">
+              <li><a href="#">Membership</a></li>
+              <li><a href="#">Luminary</a></li>
+              <li><a href="#">Corporate Sponsorship</a></li>
+            </ul>
+            <div class="mt-6 flex space-x-4">
+              <img
+                src="logo/generation.png"
+                alt="Collectico Logo"
+                class="w-28"
+              />
+              <img src="logo/genkx.png" alt="Collectico Logo" class="w-28" />
+            </div>
+          </div>
+          <div>
+            <h3 class="text-base font-semibold mb-4">About Us</h3>
+            <ul class="space-y-2">
+              <li><a href="#">Mission and History</a></li>
+              <li><a href="#">Leadership</a></li>
+              <li><a href="#">Financial Reporting</a></li>
+            </ul>
+            <h3 class="text-base font-semibold mt-6 mb-4">Follow Us</h3>
+            <div class="flex space-x-4">
+              <a href="#">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"
+                  />
+                </svg>
+              </a>
+              <a href="#">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"
+                  />
+                </svg>
+              </a>
+              <a href="#">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="border-t mt-8 pt-6 text-center">
+          <p>&copy; 2025 Collectico. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+</html>
+

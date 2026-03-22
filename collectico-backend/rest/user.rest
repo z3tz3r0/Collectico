@@ -1,0 +1,44 @@
+### Register
+POST http://localhost:3000/api/users/register
+Content-Type: application/json
+
+{
+    "firstName": "Tib",
+    "lastName": "Dragon",
+    "email": "dragonTibs@example.com",
+    "password": "123456789zZ",
+    "phone": "0123456789"
+}
+
+### Login
+POST http://localhost:3000/api/users/login
+Content-Type: application/json
+
+{
+    "email": "Nut@gmail.com",
+    "password": "123456789zZ"
+}
+
+### Logout user
+POST http://localhost:3000/api/users/auth/logout
+Content-Type: application/json
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODUwMzI3MDgwNDgwMWYxZTZkZjM5OWEiLCJpYXQiOjE3NTAxNDY4NzcsImV4cCI6MTc1MjczODg3N30.B_YzLXghXyQBN1w135Gi6YSJl1EwyT-hmWizf3_JglM
+
+
+### Reset password
+PATCH http://localhost:3000/api/users-resetpassword
+Content-Type: application/json
+
+{
+    "email": "dragonLing@example.com",
+    "password": "Reset23456789zZ"
+}
+
+### Get user
+GET http://localhost:3000/api/users
+### Get user By userId
+GET http://localhost:3000/api/users/6814356e36166409f6c60e18
+
+### verify-token
+GET http://localhost:3000/api/users/auth/verify-token
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODUwMzI3MDgwNDgwMWYxZTZkZjM5OWEiLCJpYXQiOjE3NTAxNDY4NzcsImV4cCI6MTc1MjczODg3N30.B_YzLXghXyQBN1w135Gi6YSJl1EwyT-hmWizf3_JglM
