@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, Link, InputBase, Typography, Container, Grid } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
+import { routePaths } from "@/shared/config/routes";
 
 export default function Footer() {
   return (
@@ -12,7 +13,7 @@ export default function Footer() {
               <Grid size={{ xs: 12, md: 6 }}>
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: {xs:'center', md: 'start'}, textAlign: {xs:'center', md: 'start'}, width: {md: '292px'} }}>
                   {/* Logo */}
-                  <Link component={RouterLink} to="/">
+                  <Link component={RouterLink} to={routePaths.home}>
                     <img
                       src="/newAsset/svg/logo.svg"
                       alt="logo"
@@ -48,7 +49,7 @@ export default function Footer() {
                         },
                       }}
                     />
-                    <Link component={RouterLink} to="/">
+                    <Link component={RouterLink} to={routePaths.home}>
                       <img
                         src="./newAsset/svg/arrow.svg"
                         alt="arrow"
@@ -58,7 +59,7 @@ export default function Footer() {
                   </Box>
                   <Typography sx={{fontSize: {xs:'8px', md: '10px'}}}>
                     By signing up to receive emails from collectico,<br/> you agree to our&nbsp; 
-                    <Link component={RouterLink} to="/" sx={{ color: 'primary.text', textDecoration: 'underline'}}>
+                    <Link component={RouterLink} to={routePaths.home} sx={{ color: 'primary.text', textDecoration: 'underline'}}>
                       Privacy Policy
                     </Link>.  
                     We treat your info responsibly
@@ -71,13 +72,13 @@ export default function Footer() {
                   <Box sx={{display: 'flex', justifyContent: {xs: 'space-between', md: 'end'}, gap: {md:'100px'}, alignItems: 'start', width: '100%', pt: {xs:'36px', md: '0'}}}>
                     <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'start', gap: {xs:'24px', md: '28px'}}}>
                       <Typography sx={{fontSize: {xs:'12px', md: '12px'}, fontWeight: {xs:'600', md: '700'}}}>About Us</Typography>
-                      <Link component={RouterLink} to="/">
+                      <Link component={RouterLink} to={routePaths.teamMember}>
                         <Typography sx={{fontSize: {xs:'10px', md: '10px'}, '&:hover': {textDecoration: 'underline'}}}>Team Member</Typography>
                       </Link>
-                      <Link component={RouterLink} to="/">
+                      <Link component={RouterLink} to={routePaths.mission}>
                         <Typography sx={{fontSize: {xs:'10px', md: '10px'}, '&:hover': {textDecoration: 'underline'}}}>Mission and History</Typography>
                       </Link>
-                      <Link component={RouterLink} to="/">
+                      <Link component={RouterLink} to={routePaths.financialReport}>
                         <Typography sx={{fontSize: {xs:'10px', md: '10px'}, '&:hover': {textDecoration: 'underline'}}}>Financial Reporting</Typography>
                       </Link>
                     </Box>
@@ -85,7 +86,7 @@ export default function Footer() {
                       <Box sx={{display: 'flex', flexDirection: 'column', alignItems: {xs:'center', md: 'end'}, gap: {xs:'24px', md: '28px'}}}>
                         <Box sx={{display: 'flex', flexDirection: 'column', alignItems: {xs:'start', md: 'end'}, gap: {xs:'24px', md: '28px'}}}>
                           <Typography sx={{fontSize: {xs:'12px', md: '12px'}, fontWeight: {xs:'600', md: '700'}}}>Support Us</Typography>
-                          <Link component={RouterLink} to="/">
+                          <Link component={RouterLink} to={routePaths.luminary}>
                             <Typography sx={{fontSize: {xs:'10px', md: '10px'}, '&:hover': {textDecoration: 'underline'}}}>Luminary</Typography>
                           </Link>
                         </Box>

@@ -3,7 +3,7 @@
 /* Aremat */
 @font-face {
   font-family: 'Aremat';
-  src: url('./newAsset/fonts/aremat.ttf') format('truetype');
+  src: url('/newAsset/fonts/aremat.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
 }
@@ -11,21 +11,21 @@
 /* Poppins */
 @font-face {
   font-family: 'Poppins';
-  src: url('./newAsset/fonts/Poppins-Light.ttf') format('truetype');
+  src: url('/newAsset/fonts/Poppins-Light.ttf') format('truetype');
   font-weight: 300;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Poppins';
-  src: url('./newAsset/fonts/Poppins-Medium.ttf') format('truetype');
+  src: url('/newAsset/fonts/Poppins-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Poppins';
-  src: url('./newAsset/fonts/Poppins-SemiBold.ttf') format('truetype');
+  src: url('/newAsset/fonts/Poppins-SemiBold.ttf') format('truetype');
   font-weight: 600;
   font-style: normal;
 }

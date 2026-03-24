@@ -1,30 +1,27 @@
-import { useEffect, useRef, useState } from 'react'
+import { Suspense, lazy, useRef, useState } from 'react'
 import { Box, AppBar, Link, Toolbar, List, IconButton, Drawer, InputBase, Container, Grid, Dialog, DialogContent, Typography, Popper, ClickAwayListener } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
+import { routePaths } from "@/shared/config/routes";
 import { useAuth } from "../contexts/AuthContext.jsx";
-import Login from "../pages/Login.jsx";
+
+const Login = lazy(() => import("../pages/Login.jsx"));
 
 // ****** The next section after <NavBar /> needs => pt: 15 *******//
 
 export default function NavBar() {
-  const { isAuthenticated, isLoginPopupOpen, openLoginPopup, closeLoginPopup , user} = useAuth();
+  const { isAuthenticated, isLoginPopupOpen, openLoginPopup, closeLoginPopup, logout, user } = useAuth();
   const [tempEmail, setTempEmail] = useState("");
   const [tempPassword, setTempPassword] = useState("");
-  const [firstName , setFirstName] = useState("");
-  const [lastName , setLastName] = useState("")
-
-  const [isLogin, setIsLogin] = useState(true);
-
-  useEffect(() => {
-    if (user) {
-      setFirstName(user.firstName);
-      setLastName(user.lastName);}
-  },[user])
+  const displayName = user?.firstName ? `@${user.firstName}` : "@Collector";
 
   const handleOpenLogin = (email = "", password = "") => {
     setTempEmail(typeof email === "string" ? email : "");
     setTempPassword(typeof password === "string" ? password : "");
     openLoginPopup();
+  };
+
+  const handleLogout = async () => {
+    await logout();
   };
 
     // Mobile Menu Drawer
@@ -34,32 +31,38 @@ export default function NavBar() {
 
   // Nav
   const navItems = [
-    { label: "Market", to: "/market" },
-    { label: "Auction", to: "/auction" },
-    { label: "Visual Museum", to: "/museum" },
-    { label: "Blog", to: "/blog" },
+    { label: "Market", to: routePaths.market },
+    { label: "Auction", to: routePaths.auction },
+    { label: "Visual Museum", to: routePaths.animation },
+    { label: "Blog", to: routePaths.blog },
     ];
 
 
     // Mobile Dashboard Popper
     const anchorMobileRef = useRef(null);
-    const [mobileDashboardPopper, setMobileDashboardPopper] = useState(true);
+    const [mobileAnchorEl, setMobileAnchorEl] = useState(null);
+    const [mobileDashboardPopper, setMobileDashboardPopper] = useState(false);
     
-    const handleMobileDashboardPopper = () => {
+    const handleMobileDashboardPopper = (event) => {
+        setMobileAnchorEl(event.currentTarget);
         setMobileDashboardPopper(prev => !prev);
     }
     const handleCloseMobileDashboard = () => {
+        setMobileAnchorEl(null);
         setMobileDashboardPopper(false);
     }
 
     // Dashboard Popper
     const anchorRef = useRef(null);
+    const [dashboardAnchorEl, setDashboardAnchorEl] = useState(null);
     const [dashboardPopper, setDashboardPopper] = useState(false);
     
-    const handleDashboardPopper = () => {
+    const handleDashboardPopper = (event) => {
+        setDashboardAnchorEl(event.currentTarget);
         setDashboardPopper(prev => !prev);
     }
     const handleCloseDashboard = () => {
+        setDashboardAnchorEl(null);
         setDashboardPopper(false);
     }
     const dashBoardItems = [
@@ -94,7 +97,7 @@ export default function NavBar() {
           }}
         >
             {/* Logo */}
-            <Link component={RouterLink} to="/" onClick={() => setOpenMenuDrawer(false)}>
+            <Link component={RouterLink} to={routePaths.home} onClick={() => setOpenMenuDrawer(false)}>
                 <img
                 src="./newAsset/svg/logo.svg"
                 alt="logo"
@@ -160,7 +163,7 @@ export default function NavBar() {
                         bgcolor: "#f9f9f9",
                     }}
                 >
-                <Link component={RouterLink} to="/">
+                <Link component={RouterLink} to={routePaths.home}>
                     <img
                         src="./newAsset/svg/search.svg"
                         alt="search"
@@ -202,7 +205,7 @@ export default function NavBar() {
                         // Before Login
                         <Link
                         component={RouterLink}
-                        to="/login"
+                        to={routePaths.login}
                         onClick={() => {
                             handleOpenLogin();
                             handleDrawerToggle();
@@ -228,13 +231,13 @@ export default function NavBar() {
                         <Box>
                             <Box ref={anchorMobileRef} onClick={handleMobileDashboardPopper} sx={{ display: "flex", alignItems: 'center', gap: '4px', height: 32, cursor: 'pointer' }}>
                                 <Box component="img" src="./newAsset/svg/profilePic.svg" sx={{ width: 30, height: 30 }}/>
-                                <Typography sx={{display: {xs: 'block', md: 'none'}, fontSize: {xs: '16px'}, fontFamily: 'Aremat, serif'}}>@Nonsense</Typography>
+                                <Typography sx={{display: {xs: 'block', md: 'none'}, fontSize: {xs: '16px'}, fontFamily: 'Aremat, serif'}}>{displayName}</Typography>
                             </Box>
 
                             {/* Mobile Dashboard Popper */}
                             <Popper
                                 open={mobileDashboardPopper}
-                                anchorEl={anchorMobileRef.current}
+                                anchorEl={mobileAnchorEl}
                                 placement='bottom-start'
                                 disablePortal
                                 modifiers={[{ name: 'offset', options: { offset: [0, 0] } }]} // slight vertical spacing
@@ -278,11 +281,16 @@ export default function NavBar() {
                                             <Box component="hr" sx={{height: '0.2px', width:'100%', bgcolor: 'rgba(0, 0, 0)', border: 'none', mt: '32px'}} />
                                             {/* Log Out */}
                                             <Link
-                                                component={RouterLink}
-                                                to='/login'
-                                                onClick={handleCloseMobileDashboard}
+                                                component="button"
+                                                type="button"
+                                                onClick={() => {
+                                                    handleCloseMobileDashboard();
+                                                    void handleLogout();
+                                                }}
                                                 underline="none"
                                                 sx={{
+                                                    border: "none",
+                                                    bgcolor: "transparent",
                                                     display: "flex",
                                                     alignItems: "center",
                                                     justifyContent: "center",
@@ -356,7 +364,7 @@ export default function NavBar() {
                 <Grid container alignItems="center" justifyContent="space-between" sx={{width: '100%'}}>
                     <Grid>
                         {/* Logo */}
-                        <Link component={RouterLink} to="/">
+                        <Link component={RouterLink} to={routePaths.home}>
                         <img
                             src="./newAsset/svg/logo.svg"
                             alt="logo"
@@ -413,7 +421,7 @@ export default function NavBar() {
                             bgcolor: "#f9f9f9",
                             }}
                         >
-                            <Link component={RouterLink} to="/">
+                            <Link component={RouterLink} to={routePaths.home}>
                             <img
                                 src="./newAsset/svg/search.svg"
                                 alt="search"
@@ -468,13 +476,13 @@ export default function NavBar() {
                                 <Box>
                                     <Box ref={anchorRef} onClick={handleDashboardPopper} sx={{ display: "flex", alignItems: 'center', gap: '4px', height: 32, cursor: 'pointer' }}>
                                         <Box component="img" src="./newAsset/svg/profilePic.svg" sx={{ width: 30, height: 30 }}/>
-                                        <Typography sx={{display: {md: 'none', lg: 'block'}, fontSize: {md: '18px'}, fontFamily: 'Aremat, serif'}}>@Nonsense</Typography>
+                                        <Typography sx={{display: {md: 'none', lg: 'block'}, fontSize: {md: '18px'}, fontFamily: 'Aremat, serif'}}>{displayName}</Typography>
                                     </Box>
 
                                     {/* Dashboard Popper */}
                                     <Popper
                                         open={dashboardPopper}
-                                        anchorEl={anchorRef.current}
+                                        anchorEl={dashboardAnchorEl}
                                         placement='bottom-end'
                                         disablePortal
                                         modifiers={[{ name: 'offset', options: { offset: [-2, 8] } }]} // slight vertical spacing
@@ -519,11 +527,16 @@ export default function NavBar() {
                                                     <Box component="hr" sx={{height: '0.2px', width:'100%', bgcolor: 'rgba(0, 0, 0)', border: 'none', mt: '32px'}} />
                                                     {/* Log Out */}
                                                     <Link
-                                                        component={RouterLink}
-                                                        to='/login'
-                                                        onClick={handleCloseDashboard}
+                                                        component="button"
+                                                        type="button"
+                                                        onClick={() => {
+                                                            handleCloseDashboard();
+                                                            void handleLogout();
+                                                        }}
                                                         underline="none"
                                                         sx={{
+                                                            border: "none",
+                                                            bgcolor: "transparent",
                                                             display: "flex",
                                                             alignItems: "center",
                                                             justifyContent: "center",
@@ -550,7 +563,7 @@ export default function NavBar() {
                             {/* Cart */}
                             {
                             isAuthenticated? (
-                                <Link component={RouterLink} to="/">
+                                <Link component={RouterLink} to={routePaths.cart}>
                                 <img src="./newAsset/svg/cart.svg" alt="cart" style={{height: '24px'}} />
                                 </Link>
                             ) : null
@@ -591,12 +604,14 @@ export default function NavBar() {
           alignItems: "center",
           justifyContent: "center"
         }}>
-          <Login
-            onClose={closeLoginPopup}
-            open={isLoginPopupOpen}
-            prefillEmail={tempEmail}
-            prefillPassword={tempPassword}
-          />
+          <Suspense fallback={null}>
+            <Login
+              onClose={closeLoginPopup}
+              open={isLoginPopupOpen}
+              prefillEmail={tempEmail}
+              prefillPassword={tempPassword}
+            />
+          </Suspense>
         </DialogContent>
       </Dialog>
     </>
