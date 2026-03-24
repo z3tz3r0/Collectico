@@ -1,8 +1,13 @@
 import jwt from "jsonwebtoken";
 import { User } from "../models/User.js";
+import {
+  extractBearerToken,
+  sanitizeAuthenticatedUser,
+} from "../services/authService.js";
 
 export const authUser = async (req, res, next) => {
-  const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+  const token =
+    req.cookies.token || extractBearerToken(req.headers.authorization);
   if (!token) {
     return res.status(401).json({
       error: true,
@@ -20,10 +25,7 @@ export const authUser = async (req, res, next) => {
       });
     }
 
-    req.user =  {
-      ...user.toObject(),
-      _id: user._id,
-    };
+    req.user = sanitizeAuthenticatedUser(user);
     next();
   } catch (err) {
     const isExpired = err.name === "TokenExpiredError";

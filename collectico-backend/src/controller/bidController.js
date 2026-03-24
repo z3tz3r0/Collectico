@@ -1,12 +1,11 @@
-import { Bid } from '../models/Bid.js';
+import { listBidsByProduct } from "../services/bidReadService.js";
 
 export const getBidsByProduct = async (req, res) => {
   try {
-    const bids = await Bid.find({ product: req.params.productId })
-      .sort({ createdAt: -1 })
-      .populate('user', 'firstName lastName');
-    res.json(bids);
+    const result = await listBidsByProduct(req.params.productId);
+
+    res.status(result.status).json(result.body);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to get bids' });
+    res.status(500).json({ error: "Failed to get bids" });
   }
 };

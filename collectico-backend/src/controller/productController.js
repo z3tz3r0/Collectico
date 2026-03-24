@@ -1,7 +1,10 @@
-import express from "express";
 import { Product } from "../models/Product.js";
-
-const router = express.Router();
+import {
+  getPublicProductById,
+  listAuctionProducts,
+  listFixedPriceProducts,
+  listProductsByGenre,
+} from "../services/productReadService.js";
 
 //-----Add Product-----//
 export const addProduct = async (req, res) => {
@@ -21,12 +24,9 @@ export const addProduct = async (req, res) => {
 //-----Get Fixed Price Product-----//
 export const getProduct = async (req, res) => {
   try {
-    const allProduct = await Product.find({'auction.isAuction': false , 'approve': 'approved' ,
-      'status': 'onGoing'});
-    res.status(200).json({
-      err: false,
-      allProduct,
-    });
+    const result = await listFixedPriceProducts();
+
+    res.status(result.status).json(result.body);
   } catch (err) {
     res.status(500).json({
       error: true,
@@ -82,17 +82,9 @@ export const getProductById = async (req, res) => {
 export const getOnceProductById = async (req, res) => {
   const productId = req.params.id;
   try {
-    const product = await Product.findById(productId)
-    if(!product) {
-      return res.status(404).json({
-        err: true,
-        message: "Can't find productId",
-      })
-    }
-    res.status(200).json({
-      error: false,
-      product,
-    })
+    const result = await getPublicProductById(productId);
+
+    res.status(result.status).json(result.body);
   } catch(err){
     res.status(500).json({
       error: true,
@@ -197,11 +189,9 @@ export const deleteProduct = async (req, res) => {
 //-----Get All Auction Product-----//
 export const getAllAuctionProduct = async (req, res) => {
   try {
-    const allAuctionProduct = await Product.find({'auction.isAuction': true, 'approve': 'approved' , 'status': 'onGoing'});
-    res.status(200).json({
-      err: false,
-      allAuctionProduct
-    });
+    const result = await listAuctionProducts();
+
+    res.status(result.status).json(result.body);
   } catch(err) {
     res.status(500).json({
       error: true,
@@ -238,21 +228,13 @@ export const getAllAuctionProductId = async (req, res) => {
 };
 
 export const getProductByGenre = async (req, res) => { 
-  const genre = req.query.genre;
-
   try {
-    const query = { approve: 'approved' , status: 'onGoing' , 'auction.isAuction': false };
+    const genre =
+      typeof req.query.genre === "string" ? req.query.genre : undefined;
+    const result = await listProductsByGenre(genre);
 
-    if (genre) {
-      query["tags.title"] = genre;
-    }
-
-    const products = await Product.find(query)
-    res.status(200).json({
-      error: false,
-      products,
-    });
-} catch (err) {
+    res.status(result.status).json(result.body);
+  } catch (err) {
     res.status(500).json({
       error: true,
       message: "Failed to fetch products",
@@ -260,4 +242,3 @@ export const getProductByGenre = async (req, res) => {
     });
   }
 }
-
