@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { io } from "socket.io-client";
-import { default as api, default as baseURL } from "../../service/api";
+import api, { API_BASE_URL, apiPaths } from "../../service/api";
 import ButtonSubmit from "../components/ButtonSubmit";
 import {
   ChartIcon,
@@ -14,6 +14,10 @@ import RemainingBlock from "../components/RemainingBlock";
 import { useAuth } from "../contexts/AuthContext";
 import { useCart } from "../contexts/CartContext";
 import BreadcrumbsNav from "../components/BreadcrumbsNav";
+
+function getCartProductId(item) {
+  return item?.productId?._id ?? item?.productId;
+}
 
 function AuctionImageBlock({ auctionData }) {
   return (
@@ -254,7 +258,7 @@ export default function AuctionPage() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await api.get(`/api/product/${auctionId}`);
+        const res = await api.get(apiPaths.products.detail(auctionId));
         setAuctionData(res.data?.product ?? null);
       } catch (error) {
         console.error("Error fetching product:", error);
@@ -265,15 +269,15 @@ export default function AuctionPage() {
 
   const socket = useRef();
   useEffect(() => {
-    socket.current = io(`${baseURL}`);
+    socket.current = io(API_BASE_URL || undefined);
     return () => socket.current.disconnect();
   }, []);
 
   useEffect(() => {
     const fetchBidHistory = async () => {
       try {
-        const res = await fetch(`${baseURL}/api/bids/${auctionId}`);
-        const data = await res.json();
+        const res = await api.get(apiPaths.bids.detail(auctionId));
+        const data = res.data;
         const formatted = data.map((b) => ({
           ...b,
           time: new Date(b.createdAt),
@@ -335,7 +339,7 @@ export default function AuctionPage() {
   useEffect(() => {
     if (auctionData) {
       setIsInCartDB(
-        cartItems?.some((item) => item.productId === auctionData._id)
+        cartItems?.some((item) => getCartProductId(item) === auctionData._id)
       );
     }
   }, [cartItems, auctionData]);
@@ -352,9 +356,7 @@ export default function AuctionPage() {
           quantity: 1,
         },
       };
-      await axios.post(`${baseURL}/api/cart-add`, newProduct, {
-        withCredentials: true,
-      });
+      await api.post(apiPaths.cart.add, newProduct);
       setCartItems((prev) => [...prev, newProduct.items]);
     } catch (err) {
       console.error("Add to cart failed:", err.response?.data || err.message);
@@ -363,11 +365,9 @@ export default function AuctionPage() {
 
   const removeProductFromDB = async (product) => {
     try {
-      await axios.delete(`${baseURL}/api/cart-delete/${product._id}`, {
-        withCredentials: true,
-      });
+      await api.delete(apiPaths.cart.remove(product._id));
       setCartItems((prev) =>
-        prev.filter((item) => item.productId !== product._id)
+        prev.filter((item) => getCartProductId(item) !== product._id)
       );
     } catch (err) {
       console.error(

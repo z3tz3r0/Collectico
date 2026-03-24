@@ -1,6 +1,6 @@
 import SearchIcon from "@mui/icons-material/Search";
 import { useEffect, useRef, useState } from "react";
-import { default as api } from "../../service/api";
+import api, { apiPaths } from "../../service/api";
 // import products from "../../data/products";
 
 function ListBox({ keyword, onSelect }) {
@@ -9,9 +9,7 @@ function ListBox({ keyword, onSelect }) {
   // CONNECT TO BACKEND
   async function getData() {
     try {
-      const auctionData = await api.get(
-        `/api/product-get-auction`
-      );
+      const auctionData = await api.get(apiPaths.products.auctionList);
       setAuctionProducts(auctionData.data.allAuctionProduct || []);
     } catch (err) {
       console.log(err);

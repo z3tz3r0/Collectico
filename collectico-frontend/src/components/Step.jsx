@@ -5,10 +5,11 @@ import StepLabel from "@mui/material/StepLabel";
 import Stepper from "@mui/material/Stepper";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import { useEffect, useState, } from "react";
+import { routePaths } from "@/shared/config/routes";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../../service/api";
-import {useCart} from "../../src/contexts/CartContext"
+import api, { apiPaths } from "../../service/api";
+import { useCart } from "../../src/contexts/CartContext"
 import Address from "./Address";
 import ButtonSubmit from "./ButtonSubmit";
 import PaymentMethod from "./PaymentMethod";
@@ -16,12 +17,13 @@ import Radio from "./radio";
 
 const steps = ["Shipping Method", "Shipping Address", "Payment Method"];
 
-export default function HorizontalLinearStepper({ setShipcost, cartItems, totalPrices, shipCost, tax }) {
-  // console.log("what inside carttt", cartItems);
+function getCartProductId(item) {
+  return item?.productId?._id ?? item?.productId;
+}
 
-  const { setCartItems } = useCart(); 
-  const productIdToPost = cartItems.map((id)=>(id.productId));
-  // console.log("check productID", productIdToPost);
+export default function HorizontalLinearStepper({ setShipcost, cartItems, totalPrices, shipCost, tax }) {
+  const { cartId, clearCart } = useCart();
+  const productIdToPost = cartItems.map((item) => getCartProductId(item));
 
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set());
@@ -38,12 +40,8 @@ export default function HorizontalLinearStepper({ setShipcost, cartItems, totalP
     zip: "",
     country: "",
   });
-  // ทุบบ
   const { addressLineOne, addressLineTwo, ...addressRest } = addressInput;
-  // รวมนะ
   const addressForShipping = { ...addressRest, address: `${addressLineOne} ${addressLineTwo}` };
-
-  // console.log("check addressInput", addressInput);
 
   const [error, setError] = useState({
     firstName: 0,
@@ -59,12 +57,7 @@ export default function HorizontalLinearStepper({ setShipcost, cartItems, totalP
   });
 
   const [shipping, setShippig] = useState("Standard");
-  //data for Post
   const inputToDB = { ...addressForShipping, productId: productIdToPost, totalPrice: [totalPrices, shipCost, tax], shipping: shipping, method: "Cash on Delivery" };
-
-  // console.log("check inputToDB", inputToDB);
-
-  // console.log("option from Step = ", shipping);
 
   useEffect(() => {
     let shippingCost;
@@ -83,15 +76,6 @@ export default function HorizontalLinearStepper({ setShipcost, cartItems, totalP
   }, [shipping, setShipcost])
 
   const navigate = useNavigate()
-  useEffect(() => {
-    if (activeStep === 3) {
-      addOrdertoDB(inputToDB);
-      navigate('/myorder');
-      setCartItems([])
-      deleteCartAfertOrder();
-      alert("Your purchase was successful. Thank you for choosing Collectico!");
-    }
-  }, [activeStep]);
 
 
   const handleSubmit = () => {
@@ -135,21 +119,21 @@ export default function HorizontalLinearStepper({ setShipcost, cartItems, totalP
           [name]: 0,
         }));
       }
-      // console.log("At end", checkError);
     });
 
     return checkError;
   };
 
   const step = [
-    <Radio setShippig={setShippig} />,
+    <Radio key="shipping" setShippig={setShippig} />,
     <Address
+      key="address"
       addressInput={addressInput}
       setAddressInput={setAddressInput}
       error={error}
       handleSubmit={handleSubmit}
     />,
-    <PaymentMethod />,
+    <PaymentMethod key="payment" />,
   ];
 
 
@@ -158,14 +142,11 @@ export default function HorizontalLinearStepper({ setShipcost, cartItems, totalP
     return skipped.has(step);
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (activeStep === 1) {
       const hasErrors = handleSubmit();
       if (hasErrors) {
         return;
-      }
-      if (activeStep === 2) {
-        addOrdertoDB(inputToDB);
       }
     }
 
@@ -173,6 +154,14 @@ export default function HorizontalLinearStepper({ setShipcost, cartItems, totalP
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
       newSkipped.delete(activeStep);
+    }
+
+    if (activeStep === steps.length - 1) {
+      await addOrdertoDB(inputToDB);
+      await deleteCartAfertOrder();
+      alert("Your purchase was successful. Thank you for choosing Collectico!");
+      navigate(routePaths.myOrder);
+      return;
     }
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -183,15 +172,6 @@ export default function HorizontalLinearStepper({ setShipcost, cartItems, totalP
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
-
-  // const handleSkip = () => {
-  //   setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  //   setSkipped((prevSkipped) => {
-  //     const newSkipped = new Set(prevSkipped.values());
-  //     newSkipped.add(activeStep);
-  //     return newSkipped;
-  //   });
-  // };
 
   const handleReset = () => {
     setActiveStep(0);
@@ -218,22 +198,24 @@ export default function HorizontalLinearStepper({ setShipcost, cartItems, totalP
         paymentMethod: inputToDB.method,
         productId: inputToDB.productId,
       };
-      // console.log("Payload being sent to backend:", JSON.stringify(newProduct, null, 2));
-      await api.post(`/api/order-add`, newOrder);
-      //update local state
-      // setCartItems((prev) => [...prev, newProduct.items]);
+      await api.post(apiPaths.orders.create, newOrder);
     } catch (err) {
       console.error("Add to order failed:", err.response?.data || err.message);
     }
-  }
+  };
 
   const deleteCartAfertOrder = async () => {
+    if (!cartId) {
+      return;
+    }
+
     try {
-      await api.delete(`/api/cart-delete-update/:cartId`);
+      await api.delete(apiPaths.cart.clearAfterOrder(cartId));
+      clearCart();
     } catch (err) {
       console.error("Delete order failed:", err.response?.data || err.message);
     }
-  }
+  };
 
   return (
     <Box sx={{ width: "100%" }}>

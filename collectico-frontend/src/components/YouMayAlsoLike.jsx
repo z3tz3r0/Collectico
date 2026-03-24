@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import api from "../../service/api";
+import api, { apiPaths } from "../../service/api";
 
 const ProductCard = ({ product }) => {
   return (
@@ -31,7 +31,7 @@ const YouMayAlsoLike = ({ currentProduct }) => {
   async function getData() {
     try {
       //fixed price product
-      const productData = await api.get(`/api/product-get`);
+      const productData = await api.get(apiPaths.products.list);
       setProducts(productData.data.allProduct || []);
     } catch (err) {
       console.log(err);

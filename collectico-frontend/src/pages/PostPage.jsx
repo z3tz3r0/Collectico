@@ -1,8 +1,9 @@
 import CloseIcon from "@mui/icons-material/Close";
 import { Box, IconButton, Stack } from "@mui/material";
+import { routePaths } from "@/shared/config/routes";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { default as api } from "../../service/api";
+import api, { apiPaths } from "../../service/api";
 import ButtonSubmit from "../components/ButtonSubmit";
 import ButtonTogglePostPage from "../components/ButtonTogglePostPage";
 import Navbar from "../components/Navbar";
@@ -34,8 +35,8 @@ export default function PostPage() {
   const [min, setMin] = useState("");
 
   const links = [
-    { label: "Home", to: "/" },
-    { label: "Market", to: "/market" },
+    { label: "Home", to: routePaths.home },
+    { label: "Market", to: routePaths.market },
   ];
 
   // STATE FOR KEEP ERROR MESSAGE
@@ -175,7 +176,7 @@ export default function PostPage() {
     const fetchEditProduct = async () => {
       if (!editId) return;
       try {
-        const res = await api.get(`/api/product-get/${editId}`);
+        const res = await api.get(apiPaths.products.edit(editId));
         const product = res.data.product;
         // console.log( product.auction.isAuction)
         setTitle(product.title || "");
@@ -249,14 +250,14 @@ export default function PostPage() {
       // CLICK POST BUTTON
       try {
         if (action === "post") {
-          await api.post(`/api/product-add`, newProduct);
+          await api.post(apiPaths.products.create, newProduct);
 
           alert("Your artwork is successfully posted!");
         } else if (action === "update") {
-          await api.put(`/api/product-put/${editId}`, newProduct);
+          await api.put(apiPaths.products.edit(editId), newProduct);
           alert("Product updated successfully");
         }
-        navigate("/market");
+        navigate(routePaths.market);
       } catch (err) {
         console.error("Error submitting product:", err);
         alert("Submission failed. Try again later.");

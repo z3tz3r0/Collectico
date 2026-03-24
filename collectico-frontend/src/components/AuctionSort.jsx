@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "../../service/api";
+import api, { apiPaths } from "../../service/api";
 import AuctionGallery from "../components/AuctionGallery";
 import AuctionSearch from "./AuctionSearch";
 
@@ -13,7 +13,7 @@ function AuctionSort() {
   // CONNECT TO BACKEND
   async function getData() {
     try {
-      const auctionData = await api.get(`/api/product-get-auction`);
+      const auctionData = await api.get(apiPaths.products.auctionList);
       setAuctionData(auctionData.data.allAuctionProduct || []);
     } catch (err) {
       console.log(err);

@@ -1,5 +1,7 @@
 import React from "react";
-import Animation from "../../Animation/Animation.jsx";
+import { Link } from "react-router-dom";
+import Animation from "@/Animation/Animation.jsx";
+import { routePaths } from "@/shared/config/routes.js";
 
 function Footer() {
   return (
@@ -23,14 +25,14 @@ function Footer() {
           <div className="grid grid-cols-2 border-white border-b">
             <div className="ml-2 sm:ml-5 p-2 sm:p-3">
               <h2 className="font-bold pb-2 sm:pb-4">Support us</h2>
-              <a href="/membership">Membership</a>
+              <Link to={routePaths.membership}>Membership</Link>
               <p>
                 {" "}
-                <a href="/luminary">Luminary</a>
+                <Link to={routePaths.luminary}>Luminary</Link>
               </p>
               <p>
                 {" "}
-                <a href="/sponsorship">Corporate Sponsorship</a>
+                <Link to={routePaths.sponsorship}>Corporate Sponsorship</Link>
               </p>
             </div>
             <div className="p-2 sm:p-3 flex flex-col justify-center">
@@ -64,15 +66,15 @@ function Footer() {
                 <h2 className="font-bold pb-1 sm:pb-2">About us</h2>
                 <p>
                   {" "}
-                  <a href="/mission">Mission and History</a>
+                  <Link to={routePaths.mission}>Mission and History</Link>
                 </p>
                 <p>
                   {" "}
-                  <a href="/teammember">Meet Team Member</a>
+                  <Link to={routePaths.teamMember}>Meet Team Member</Link>
                 </p>
                 <p>
                   {" "}
-                  <a href="/financialreport">Financial Reporting</a>
+                  <Link to={routePaths.financialReport}>Financial Reporting</Link>
                 </p>
               </div>
             </div>
@@ -146,13 +148,13 @@ function Footer() {
               <h3 className="text-base font-semibold mb-4">Support Us</h3>
               <ul className="space-y-2">
                 <li>
-                  <a href="/membership">Membership</a>
+                  <Link to={routePaths.membership}>Membership</Link>
                 </li>
                 <li>
-                  <a href="/luminary">Luminary</a>
+                  <Link to={routePaths.luminary}>Luminary</Link>
                 </li>
                 <li>
-                  <a href="/sponsorship">Corporate Sponsorship</a>
+                  <Link to={routePaths.sponsorship}>Corporate Sponsorship</Link>
                 </li>
               </ul>
               <div className="mt-6 flex space-x-4">
@@ -172,13 +174,13 @@ function Footer() {
               <h3 className="text-base font-semibold mb-4">About Us</h3>
               <ul className="space-y-2">
                 <li>
-                  <a href="/mission">Mission and History</a>
+                  <Link to={routePaths.mission}>Mission and History</Link>
                 </li>
                 <li>
-                  <a href="/teammember">Meet Team Member</a>
+                  <Link to={routePaths.teamMember}>Meet Team Member</Link>
                 </li>
                 <li>
-                  <a href="/financialreport">Financial Reporting</a>
+                  <Link to={routePaths.financialReport}>Financial Reporting</Link>
                 </li>
               </ul>
               <h3 className="text-base font-semibold mt-6 mb-4">Follow Us</h3>

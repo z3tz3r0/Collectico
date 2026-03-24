@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import AuctionCard from "./AuctionCard";
 import { Box } from "@mui/material";
-import baseURL from "../../service/api";
-import axios from "axios";
+import api, { apiPaths } from "../../service/api";
 
 const ProductGrid = ({ products }) => {
   const [bids, setBids] = useState({}); // { [productId]: currentBid }
@@ -13,7 +12,7 @@ const ProductGrid = ({ products }) => {
       await Promise.all(
         products.map(async (product) => {
           try {
-            const res = await axios.get(`${baseURL}/api/bids/${product._id}`);
+            const res = await api.get(apiPaths.bids.detail(product._id));
             const data = res.data;
             const highest =
               data.length > 0 ? Math.max(...data.map((b) => b.amount)) : 0;

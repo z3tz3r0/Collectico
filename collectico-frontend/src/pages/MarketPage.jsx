@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import api from "../../service/api";
+import { getEditPostPath, routePaths } from "@/shared/config/routes.js";
+import api, { apiPaths } from "../../service/api";
 import ButtonSubmit from "../components/ButtonSubmit";
 import { Button } from "@mui/material";
 import PostCard from "../components/PostCard";
@@ -19,7 +20,7 @@ export default function MarketPage() {
   // STATE FOR SHOW NO POST
   // const [noPost, setNoPost] = useState(true);
 
-  const links = [{ label: "Home", to: "/" }];
+  const links = [{ label: "Home", to: routePaths.home }];
 
   const filteredProducts = allProducts.filter((product) => {
     const status = product.status?.toLowerCase();
@@ -37,7 +38,7 @@ export default function MarketPage() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await api.get(`/api/my-products`);
+        const res = await api.get(apiPaths.products.myProducts);
         setAllProducts(res.data);
         // setNoPost(res.data.length === 0);
       } catch (err) {
@@ -57,7 +58,7 @@ export default function MarketPage() {
       );
       if  (!confirmed) return;
 
-      await api.delete(`/api/product-delete/${id}`);
+      await api.delete(apiPaths.products.edit(id));
 
       //update local
       const updatedProducts = allProducts.filter(
@@ -76,7 +77,7 @@ export default function MarketPage() {
 
   // EDIT BUTTON FUNCTION
   function handleEdit(id) {
-    navigate(`/postpage/${id}`);
+    navigate(getEditPostPath(id));
   }
 
   return (
@@ -87,7 +88,7 @@ export default function MarketPage() {
         <header className="flex flex-col gap-4 w-[90%] sm:w-[80%] bg-[#f0e0d000]">
           <div className="flex flex-row justify-between">
             <h1 className="text-[1.8rem] sm:text-[2rem] font-bold">Market</h1>
-            <Link to="/postpage">
+            <Link to={routePaths.postPage}>
               <ButtonSubmit label="+ Post New Product" px={{xs:"3px",sm:"20px"}} py="8px" />
             </Link>
           </div>
@@ -116,7 +117,7 @@ export default function MarketPage() {
                   className=" w-[300px]"
                 />
                 <p className="absolute top-65 font-semibold">
-                  You haven't posted product.
+                  You haven&apos;t posted product.
                 </p>
               </div>
             </div>

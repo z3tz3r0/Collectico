@@ -1,7 +1,7 @@
 import { Box, FormGroup, Typography } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../../service/api";
+import api, { apiPaths } from "../../service/api";
 import ButtonSubmit from "../components/ButtonSubmit";
 import ColumnInput from "../components/ColumnInput";
 
@@ -46,7 +46,10 @@ export default function ForgotPassword() {
       // } else {
       //   alert(result.message || "Reset password failed");
       // }
-      const res = await api.patch(`/api/users-resetPassword`, checkResetPasswordUser);
+      const res = await api.patch(
+        apiPaths.auth.resetPassword,
+        checkResetPasswordUser
+      );
       if (res.data) navigate(`/login`);
     } catch (err) {
       console.error(err);
@@ -66,7 +69,7 @@ export default function ForgotPassword() {
           borderRadius: "20px",
         }}
       >
-        <div class="flex flex-col justify-center items-center gap-[8px]">
+        <div className="flex flex-col justify-center items-center gap-[8px]">
           <img src="https://res.cloudinary.com/dnkaoicoo/image/upload/v1747275164/u1qjduxtlkxl1e9bl4tw.png" className="w-[60px] pb-[12px]" />
           <Typography sx={{ fontSize: "1.5rem", fontWeight: "bold", color: "primary.main" }}>
             Welcome back

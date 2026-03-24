@@ -1,7 +1,7 @@
 import SearchIcon from "@mui/icons-material/Search";
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-import api from "../../service/api";
+import api, { apiPaths } from "../../service/api";
 
 function ListBox({ keyword, onSelect }) {
   const location = useLocation();
@@ -19,7 +19,7 @@ function ListBox({ keyword, onSelect }) {
     if (!genre) return
     const fetchProducts = async () => {
       try {
-        const res = await api.get(`/api/products?genre=${genre}`);
+        const res = await api.get(apiPaths.products.byGenre(genre));
         setProducts(res.data.products);
       } catch (error) {
         console.error("Error fetching products:", error);

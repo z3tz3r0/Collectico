@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import products from "../../data/products";
+import products from "@/data/products";
 
 function ListBox({ keyword }) {
   //Filter product that Title or Artist includes Keyword

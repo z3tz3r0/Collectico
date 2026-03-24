@@ -1,31 +1,25 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { routePaths } from "@/shared/config/routes.js";
 import { useAuth } from "../contexts/AuthContext";
 import { Button } from "@mui/material";
 
 const UserDropdown = () => {
-  const { logout , user} = useAuth();
-  const [firstName , setFirstName] = useState("");
-  const [lastName , setLastName] = useState("")
-
+  const { logout, user } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const fullName = [user?.firstName, user?.lastName].filter(Boolean).join(" ");
  
   const navigate = useNavigate();
   const handleLogout = () => {
     logout();
-    navigate("/");
-  }
+    navigate(routePaths.home);
+  };
   const toggleDropdown = () => setDropdownOpen((prev) => !prev);
   const closeDropdown = () => setDropdownOpen(false);
   const closeDropdownDisable = () => {
-      alert("This function is disable for now i told you not to click it!")
-      setDropdownOpen(false)};
-  
-      useEffect(() => {
-    if (user) {
-      setFirstName(user.firstName);
-      setLastName(user.lastName);}
-  },[user])
+    alert("This function is disable for now; I told you not to click it!");
+    setDropdownOpen(false);
+  };
 
   const wrapperRef = useRef(null);
   useEffect(() => {
@@ -66,7 +60,9 @@ const UserDropdown = () => {
               alt="profile"
               className="w-10 h-10 rounded-full object-cover"
             />
-            <span className=" font-medium text-[##f9f7f3]">{firstName || "Guest"}      {lastName} </span>
+            <span className=" font-medium text-[##f9f7f3]">
+              {fullName || "Guest"}
+            </span>
           </div>
           <ul className="p-2 bg-[#806248] text-[#f9f7f3]">
             <li>
@@ -74,12 +70,12 @@ const UserDropdown = () => {
                 onClick={closeDropdownDisable}
                 className="block px-4 py-2 bg-gray-600"
               >
-                Account (don't click!)
+                Account (don&apos;t click!)
               </Link>
             </li>
             <li>
               <Link
-                to="/market"
+                to={routePaths.market}
                 onClick={closeDropdown}
                 className="block px-4 py-2 hover:bg-[#62483a]"
               >
@@ -91,7 +87,7 @@ const UserDropdown = () => {
                 onClick={closeDropdownDisable}
                 className="block px-4 py-2 bg-gray-600"
               >
-                Setting (don't click!)
+                Setting (don&apos;t click!)
               </Link>
             </li>
             <li>

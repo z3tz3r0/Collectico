@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { default as api } from "../../service/api";
+import api, { apiPaths } from "../../service/api";
 import BreadcrumbsNav from "../components/BreadcrumbsNav";
 import ButtonSubmit from "../components/ButtonSubmit";
 import YouMayAlsoLike from "../components/YouMayAlsoLike";
 import { useCart } from "../contexts/CartContext";
 import { useAuth } from "../contexts/AuthContext";
+
+function getCartProductId(item) {
+  return item?.productId?._id ?? item?.productId;
+}
 
 function ProductPage() {
   const { user, openLoginPopup } = useAuth();
@@ -13,7 +17,7 @@ function ProductPage() {
   const [isInCartDB, setIsInCartDB] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const {  cartItems, setCartItems  } = useCart(); //From Cart Context
+  const { cartItems, setCartItems, refreshCart } = useCart();
   const links = [
     { label: "Home", to: "/" },
     { label: "Collections", to: "/mainshop" },
@@ -23,7 +27,7 @@ function ProductPage() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await api.get(`/api/product/${productId}`);
+        const res = await api.get(apiPaths.products.detail(productId));
         setProduct(res.data?.product ?? null);
       } catch (error) {
         console.error("Error fetching product:", error);
@@ -33,23 +37,21 @@ function ProductPage() {
     fetchProduct();
   }, [productId]);
 
-  // Update `isInCartDB` whenever `product` or `cartItems` change
   useEffect(() => {
-    const fetchCart = async () => {
-      try {
-        const res = await api.get(`/api/cart-get`);
-        setCartItems(res.data.cart.items);
-      } catch (err) {
-        console.error("Error fetching cart:", err.response?.data || err.message);
-      }
+    if (!user) {
+      setCartItems([]);
+      return;
     }
-    fetchCart();
-  }, [])
+
+    refreshCart();
+  }, [refreshCart, setCartItems, user]);
 
   //Check if this product is already in cart
   useEffect(() => {
     if (product) {
-      setIsInCartDB(cartItems?.some((item) => item.productId === product._id));
+      setIsInCartDB(
+        cartItems?.some((item) => getCartProductId(item) === product._id)
+      );
     }
   }, [cartItems, product]);
 
@@ -68,13 +70,8 @@ function ProductPage() {
         },
       };
 
-      await api.post(`/api/cart-add`, newProduct);
-
-      const res = await axios.get(`${baseURL}/api/cart-get`, {
-        withCredentials: true,
-      });
-      //update cart context
-      setCartItems(res.data.cart.items);
+      await api.post(apiPaths.cart.add, newProduct);
+      await refreshCart();
       setIsInCartDB(true);
     } catch (err) {
       console.error("Add to cart failed:", err.response?.data || err.message);
@@ -84,9 +81,9 @@ function ProductPage() {
   //Remove Product from Database
   const removeProductFromDB = async (product) => {
     try {
-      await api.delete(`/api/cart-delete/${product._id}`);
+      await api.delete(apiPaths.cart.remove(product._id));
       setCartItems((prev) =>
-        prev.filter((item) => item.productId._id !== product._id)
+        prev.filter((item) => getCartProductId(item) !== product._id)
       );
       setIsInCartDB(false);
     } catch  (err) {
@@ -175,7 +172,9 @@ function ProductPage() {
               onClick={() => {
                 if (!user) {
                   openLoginPopup();
+                  return;
                 }
+
                 if (isInCartDB) {
                   removeProductFromDB(product);
                 } else {

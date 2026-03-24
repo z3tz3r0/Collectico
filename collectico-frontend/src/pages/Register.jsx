@@ -1,7 +1,7 @@
 import { Box, Button, FormGroup, Stack, Typography, Switch, FormControlLabel, TextareaAutosize, SvgIcon, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import { useState } from "react";
-import api from "../../service/api";
+import api, { apiPaths } from "../../service/api";
 import ButtonSubmit from "../components/ButtonSubmit";
 import SquareInput from "../newComponents/SquareInput";
 import { useNavigate } from "react-router-dom";
@@ -120,7 +120,7 @@ export default function Register() {
     };
 
     try {
-      await api.post(`/api/users/register`, newUser);
+      await api.post(apiPaths.auth.register, newUser);
       setDialogContent({
         title: "Success!",
         message: "Register success! Please login to continue.",

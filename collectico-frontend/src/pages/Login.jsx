@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ButtonSubmit from "../newComponents/ButtonSubmit";
 import {
   Link,
@@ -15,6 +15,7 @@ import {
   DialogActions,
 } from "@mui/material";
 import RoundedInput from "../newComponents/RoundedInput";
+import { routePaths } from "@/shared/config/routes";
 
 import { useAuth } from "../contexts/AuthContext";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
@@ -23,7 +24,7 @@ import { FcGoogle } from "react-icons/fc";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import ErrorIcon from '@mui/icons-material/Error';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import api from "../../service/api";
+import api, { apiPaths } from "../../service/api";
 
 export default function Login({
   onClose,
@@ -47,12 +48,14 @@ export default function Login({
   };
 
   const handleClose = () => {
+    setEmail("");
+    setPassword("");
     onClose();
   };
 
   const handleGoToRegister = () => {
     onClose();
-    navigate('/register');
+    navigate(routePaths.register);
   };
 
   async function handleSubmit(e) {
@@ -64,7 +67,7 @@ export default function Login({
     };
 
     try {
-      const res = await api.post(`/api/users/login`, loginData);
+      const res = await api.post(apiPaths.auth.login, loginData);
       if (!res.data.error) {
         login({
           id: res.data._id,
@@ -105,10 +108,8 @@ export default function Login({
       console.error(err);
     }
   }
-  useEffect(() => {
-    if (prefillEmail) setEmail(prefillEmail);
-    if (prefillPassword) setPassword(prefillPassword);
-  }, [prefillEmail, prefillPassword]);
+  const emailValue = email || prefillEmail;
+  const passwordValue = password || prefillPassword;
 
   return (
     <>
@@ -170,7 +171,7 @@ export default function Login({
             >
               <Link
                 component={RouterLink}
-                to="/"
+                to={routePaths.home}
                 sx={{ height: { xs: "24px", sm: "38px" } }}
               >
                 <img
@@ -233,7 +234,7 @@ export default function Login({
                         label={"E-mail"}
                         placeholder={"Enter your email"}
                         fontWeight={500}
-                        value={email}
+                        value={emailValue}
                         onChange={(e) => setEmail(e.target.value)}
                       />
                       <RoundedInput
@@ -241,7 +242,7 @@ export default function Login({
                         label={"Password"}
                         placeholder={"Enter your password"}
                         fontWeight={500}
-                        value={password}
+                        value={passwordValue}
                         onChange={(e) => setPassword(e.target.value)}
                       />
                     </Stack>
@@ -339,7 +340,7 @@ export default function Login({
                   placeSelf: "center",
                 }}
               >
-                <Box>Don't have an account yet?</Box>
+                <Box>Don&apos;t have an account yet?</Box>
                 <Box
                   sx={{
                     ml: 2,

@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
-import api from "../../service/api";
+import api, { apiPaths } from "../../service/api";
 import OrderCard from "../components/OrderCard";
 import PaginationBar from "../components/PaginationBar";
 import StatsCard from "../components/StatsCard";
@@ -24,7 +24,7 @@ function MyOrderPage() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const res = await api.get(`/api/order-get`);
+        const res = await api.get(apiPaths.orders.list);
         setData(res.data.orderHistory);
       } catch (err) {
         console.error("Error fetching data:", err);

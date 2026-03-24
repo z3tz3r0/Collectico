@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import RemainingBlock from "../components/RemainingBlock";
-import { mockBidHistory } from "../../data/mockBidHistory";
+import { mockBidHistory } from "@/data/mockBidHistory";
 import ButtonSubmit from "../components/ButtonSubmit";
 import { useParams } from "react-router-dom";
-import products from "../../data/products";
+import products from "@/data/products";
 
 // Mockup data
 // const mockupData = {

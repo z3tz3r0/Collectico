@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import mockUpProduct from '../../data/mockUpProduct';
+import mockUpProduct from '@/data/mockUpProduct';
 import { Box, Chip, Tabs, Tab } from '@mui/material';
 
 const STATUS = [

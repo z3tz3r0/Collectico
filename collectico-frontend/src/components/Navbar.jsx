@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Animation from "../../Animation/Animation.jsx";
+import Animation from "@/Animation/Animation.jsx";
+import { routePaths } from "@/shared/config/routes.js";
 import { useCart } from "../contexts/CartContext";
 import { useAuth } from "../contexts/AuthContext.jsx";
 import { Badge, Dialog, DialogContent } from "@mui/material";
@@ -49,14 +50,14 @@ function Navbar() {
         {/* nav-mobile */}
         <div className="flex flex-col items-center justify-center w-full p-4 md:hidden">
           <div className="flex items-center justify-center w-full">
-            <Link to="/">
+            <Link to={routePaths.home}>
               <img
                 src="https://res.cloudinary.com/dnkaoicoo/image/upload/v1747275164/u1qjduxtlkxl1e9bl4tw.png"
                 alt="Collectico Logo"
                 className="w-7 h-7"
               />
             </Link>
-            <Link to="/">
+            <Link to={routePaths.home}>
               <h2 className="text-l font-bold ml-2">COLLECTICO</h2>
             </Link>
           </div>
@@ -96,7 +97,7 @@ function Navbar() {
                   />
                 </svg>
                 <UserDropdown />
-                <Link to="/MyOrder">
+                <Link to={routePaths.myOrder}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -112,7 +113,7 @@ function Navbar() {
                     />
                   </svg>
                 </Link>
-                <Link to="/Cart">
+                <Link to={routePaths.cart}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -141,10 +142,10 @@ function Navbar() {
             )}
           </div>
           <div className="flex-col items-center justify-between mt-4 space-x-8">
-            <Link to="/">Home</Link>
-            <Link to="/mainshop">Shop</Link>
-            <Link to="/auction">Auction</Link>
-            <Link to="/ourstory">About</Link>
+            <Link to={routePaths.home}>Home</Link>
+            <Link to={routePaths.mainShop}>Shop</Link>
+            <Link to={routePaths.auction}>Auction</Link>
+            <Link to={routePaths.ourStory}>About</Link>
           </div>
         </div>
         {/* nav-pc */}
@@ -152,31 +153,31 @@ function Navbar() {
         <div className="hidden md:block p-2">
           <div className="max-w-screen-2xl mx-auto flex items-center justify-between px-6">
             <div className="flex items-center pl-4">
-              <Link to="/">
+              <Link to={routePaths.home}>
                 <img
                   src="https://res.cloudinary.com/dnkaoicoo/image/upload/v1747275164/u1qjduxtlkxl1e9bl4tw.png"
                   alt="Collectico Logo"
                   className="w-10 h-10"
                 />
               </Link>
-              <Link to="/">
+              <Link to={routePaths.home}>
                 <h2 className="text-2xl font-bold ml-2 hover:text-[#b49b8e]">
                   COLLECTICO
                 </h2>
               </Link>
             </div>
             <div className="hidden md:flex space-x-10">
-              <Link to="/" className="hover:text-[#b49b8e]">
+              <Link to={routePaths.home} className="hover:text-[#b49b8e]">
                 Home
               </Link>
-              <Link to="/mainshop" className="hover:text-[#b49b8e]">
+              <Link to={routePaths.mainShop} className="hover:text-[#b49b8e]">
                 Shop
               </Link>
               <Animation />
-              <Link to="/auction" className="hover:text-[#b49b8e]">
+              <Link to={routePaths.auction} className="hover:text-[#b49b8e]">
                 Auction
               </Link>
-              <Link to="/ourstory" className="hover:text-[#b49b8e]">
+              <Link to={routePaths.ourStory} className="hover:text-[#b49b8e]">
                 About
               </Link>
             </div>
@@ -198,7 +199,7 @@ function Navbar() {
               {isAuthenticated ? (
                 <>
                   <UserDropdown />
-                  <Link to="/myorder" className="hover:text-[#b49b8e]">
+                  <Link to={routePaths.myOrder} className="hover:text-[#b49b8e]">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -215,7 +216,7 @@ function Navbar() {
                     </svg>
                   </Link>
                   <div className="relative">
-                    <Link to="/cart" className="hover:text-[#b49b8e]">
+                    <Link to={routePaths.cart} className="hover:text-[#b49b8e]">
                       <Badge badgeContent={cartCount} color="secondary">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
