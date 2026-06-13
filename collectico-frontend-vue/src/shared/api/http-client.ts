@@ -40,14 +40,13 @@ export const apiPaths = {
 export function useApi() {
   const apiBase = useRuntimeConfig().public.apiBase as string
   const headers = import.meta.server ? useRequestHeaders(['cookie']) : undefined
+  // 401s are handled contextually, not globally here: the `auth` route guard redirects
+  // protected routes and feature actions handle their own errors. A blanket redirect would
+  // loop on expected 401s (e.g. verifyToken for an anonymous visitor), and clearing the auth
+  // store from this shared layer would be an upward FSD dependency.
   return ofetch.create({
     baseURL: apiBase,
     credentials: 'include',
     headers,
-    onResponseError({ response }) {
-      if (response.status === 401) {
-        // Phase 1 (auth): clear the auth store and redirect to login.
-      }
-    },
   })
 }
