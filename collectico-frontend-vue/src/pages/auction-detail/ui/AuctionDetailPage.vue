@@ -2,7 +2,7 @@
 import { useQuery } from '@tanstack/vue-query'
 import { useApi } from '@/shared/api/http-client'
 import { productDetailQuery } from '@/entities/product'
-import { AuctionCountdown, CurrentBidDisplay, bidsByProductQuery, highestBidAmount } from '@/entities/auction'
+import { AuctionCountdown, CurrentBidDisplay, bidsByProductQuery, highestBid, highestBidAmount } from '@/entities/auction'
 import { BidForm, BidHistory, useAuctionBidding } from '@/features/bidding'
 
 // FSD page: auction detail with live bidding. Product + bid history are SSR'd; the countdown and the
@@ -25,6 +25,12 @@ if (import.meta.server) {
 const bids = computed(() => bidsData.value ?? [])
 const startingBid = computed(() => Number(product.value?.minBidPrice) || 0)
 const currentBid = computed(() => highestBidAmount(bids.value))
+const winner = computed(() => {
+  const top = highestBid(bids.value)
+  if (!top) return null
+  const name = `${top.user?.firstName ?? ''} ${top.user?.lastName ?? ''}`.trim() || 'Anonymous'
+  return { name, amount: Number(top.amount) || 0 }
+})
 const isAuctionEnded = ref(false)
 
 function onBid(amount: number) {
@@ -58,7 +64,12 @@ function onEnded() {
         <p v-if="product.description" class="auction-detail__desc">{{ product.description }}</p>
 
         <ClientOnly>
-          <BidForm :current-bid="currentBid" :is-auction-ended="isAuctionEnded" @bid="onBid" />
+          <BidForm
+            :current-bid="currentBid"
+            :is-auction-ended="isAuctionEnded"
+            :winner="winner"
+            @bid="onBid"
+          />
         </ClientOnly>
         <p v-if="bidError" role="alert" class="auction-detail__error">{{ bidError }}</p>
 

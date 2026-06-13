@@ -20,28 +20,44 @@ export function useAuctionBidding(productId: MaybeRefOrGetter<string>) {
   const bidError = ref<string | null>(null)
   const idRef = computed(() => toValue(productId))
 
+  function joinRoom() {
+    socket?.emit('joinAuction', idRef.value)
+  }
   function onNewBid(payload: NewBidPayload) {
-    // The backend broadcasts newBid to all clients, so filter to this auction before refetching.
+    // Room-scoped broadcasts already target this auction; the id check is a harmless extra guard.
+    // A new accepted bid means any prior bid error is stale, so clear it.
     if (payload?.productId === idRef.value) {
+      bidError.value = null
       queryClient.invalidateQueries({ queryKey: ['bids', idRef.value] })
     }
   }
   function onBidError(payload: BidErrorPayload) {
     bidError.value = payload?.message ?? 'Bid failed'
   }
+  function onConnect() {
+    // Fires on the initial connect and every reconnect. newBid events broadcast while disconnected
+    // are not replayed, so re-join the room and re-sync the history on every (re)connect.
+    joinRoom()
+    queryClient.invalidateQueries({ queryKey: ['bids', idRef.value] })
+  }
 
   onMounted(() => {
     if (!socket) return
     socket.on('newBid', onNewBid)
     socket.on('bidError', onBidError)
+    socket.on('connect', onConnect)
+    if (socket.connected) joinRoom()
   })
   onUnmounted(() => {
     if (!socket) return
+    socket.emit('leaveAuction', idRef.value)
     socket.off('newBid', onNewBid)
     socket.off('bidError', onBidError)
+    socket.off('connect', onConnect)
   })
 
-  // Emits the bid over the socket. Returns false and opens the login popup when not authenticated.
+  // Emits the bid over the socket. The server derives the bidder from the authenticated handshake,
+  // so no userId is sent (anti-impersonation). Returns false + opens the login popup when anonymous.
   function placeBid(amount: number): boolean {
     bidError.value = null
     if (!auth.isAuthenticated || !auth.user?.id) {
@@ -52,7 +68,7 @@ export function useAuctionBidding(productId: MaybeRefOrGetter<string>) {
       bidError.value = 'Realtime connection unavailable.'
       return false
     }
-    socket.emit('placeBid', { productId: idRef.value, userId: auth.user.id, amount })
+    socket.emit('placeBid', { productId: idRef.value, amount })
     return true
   }
 

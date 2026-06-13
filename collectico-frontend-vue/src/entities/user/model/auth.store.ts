@@ -13,6 +13,7 @@ import type {
   RequestResetPayload,
   ResetPasswordPayload,
 } from './types'
+import { reconnectSocket } from '@/shared/api/socket'
 
 // FSD entities/user model: the Pinia auth store. Replaces the legacy React AuthContext.
 export const useAuthStore = defineStore('auth', () => {
@@ -41,6 +42,8 @@ export const useAuthStore = defineStore('auth', () => {
     const next = await loginRequest(credentials)
     setSession(next)
     closeLoginPopup()
+    // Re-handshake the realtime socket so it picks up the new auth cookie (enables bidding).
+    reconnectSocket()
     return next
   }
 
@@ -64,6 +67,8 @@ export const useAuthStore = defineStore('auth', () => {
       await logoutRequest()
     } finally {
       setSession(null)
+      // Re-handshake so the socket drops its authenticated identity after sign-out.
+      reconnectSocket()
     }
   }
 

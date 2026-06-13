@@ -15,3 +15,11 @@ export function useSocket(): Socket | null {
   }
   return socket
 }
+
+// Force a fresh handshake so the server re-reads the auth cookie. Call after login/logout so the
+// socket's authenticated identity (socket.data.userId, set from the cookie at handshake) stays in
+// sync with the session. The 'connect' that follows lets listeners re-join rooms and re-sync.
+export function reconnectSocket(): void {
+  if (import.meta.server || !socket) return
+  socket.disconnect().connect()
+}

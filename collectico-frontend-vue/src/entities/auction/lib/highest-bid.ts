@@ -8,3 +8,13 @@ export function highestBidAmount(bids: Bid[]): number {
     return Number.isFinite(n) && n > max ? n : max
   }, 0)
 }
+
+// The single highest bid (for the winner display), or undefined when there are no valid bids.
+export function highestBid(bids: Bid[]): Bid | undefined {
+  return bids.reduce<Bid | undefined>((best, bid) => {
+    const n = Number(bid.amount)
+    if (!Number.isFinite(n)) return best
+    const bestN = best ? Number(best.amount) : Number.NEGATIVE_INFINITY
+    return n > bestN ? bid : best
+  }, undefined)
+}
