@@ -15,7 +15,7 @@ if (import.meta.server) await suspense().catch(() => {})
 
 const priceLabel = computed(() => {
   const n = Number(product.value?.price)
-  return Number.isFinite(n) && n > 0 ? `$${n.toLocaleString()}` : null
+  return Number.isFinite(n) && n > 0 ? `$${n.toLocaleString('en-US')}` : null
 })
 </script>
 

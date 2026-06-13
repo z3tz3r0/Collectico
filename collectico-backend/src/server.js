@@ -6,6 +6,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import http from 'http';
 import { initializeSocket } from './config/socket.js';
+import { getCorsOrigins } from './config/cors.js';
 import router from "./routes/route.js";
 
 dotenv.config();
@@ -27,7 +28,7 @@ initializeSocket(server);
 
 // CORS configuration
 const corsOptions = {
-  origin: ["http://localhost:5173", "https://dragon-tempura-sprint2.vercel.app"],
+  origin: getCorsOrigins(),
   credentials: true,
 }
 app.use(cors(corsOptions));

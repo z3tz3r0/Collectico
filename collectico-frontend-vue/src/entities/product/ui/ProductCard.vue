@@ -6,12 +6,19 @@ const props = defineProps<{ product: Product }>()
 
 const priceLabel = computed(() => {
   const n = Number(props.product.price)
-  return Number.isFinite(n) && n > 0 ? `$${n.toLocaleString()}` : null
+  return Number.isFinite(n) && n > 0 ? `$${n.toLocaleString('en-US')}` : null
 })
+
+// Auction products link to the live auction detail; fixed-price products to the standard detail.
+const linkTo = computed(() =>
+  props.product.auction?.isAuction
+    ? `/auction/${props.product._id}`
+    : `/product/${props.product._id}`,
+)
 </script>
 
 <template>
-  <NuxtLink :to="`/product/${product._id}`" class="product-card">
+  <NuxtLink :to="linkTo" class="product-card">
     <div class="product-card__media">
       <img v-if="product.image" :src="product.image" :alt="product.title" loading="lazy" />
     </div>

@@ -1,6 +1,7 @@
 import { Server } from 'socket.io';
 import { Bid } from '../models/Bid.js';
 import { Product } from '../models/Product.js';
+import { getCorsOrigins } from './cors.js';
 
 let io;
 
@@ -41,7 +42,8 @@ async function handlePlaceBid(socket, { productId, userId, amount }) {
 
 function initializeSocket(server) {
   io = new Server(server, {
-    cors: { origin: ['https://dragon-tempura-sprint2.vercel.app', 'http://localhost:5173'] },
+    // credentials:true so the cookie-auth handshake works with an explicit origin allowlist.
+    cors: { origin: getCorsOrigins(), credentials: true },
   });
 
   io.on('connection', (socket) => {
