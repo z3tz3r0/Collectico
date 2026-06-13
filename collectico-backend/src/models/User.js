@@ -47,6 +47,8 @@ const UserSchema = new Schema({
     }
   },
   createOn: { type : Date, default: new Date().getTime() },
+  resetTokenHash: { type: String, select: false },
+  resetTokenExpires: { type: Date, select: false },
 });
 
 //Hash password

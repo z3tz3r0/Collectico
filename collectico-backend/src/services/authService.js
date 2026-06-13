@@ -1,7 +1,16 @@
+import crypto from "node:crypto";
+
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 import { User } from "../models/User.js";
+import { sendPasswordResetEmail } from "./emailService.js";
+
+const DEFAULT_RESET_TOKEN_TTL_MS = 3600000;
+
+function hashResetToken(rawToken) {
+  return crypto.createHash("sha256").update(rawToken).digest("hex");
+}
 
 const authCookieOptions = {
   httpOnly: true,
@@ -137,26 +146,83 @@ export async function loginUserAccount(payload = {}) {
   });
 }
 
-export async function resetUserPassword(payload = {}) {
-  const { email, password } = payload;
+export async function requestPasswordReset(payload = {}) {
+  const { email } = payload;
 
-  if (!email || !password) {
-    return createResponse(400, {
-      error: true,
-      message: "Email and password are required",
-    });
+  // Anti-enumeration: always return the same 200 response regardless of
+  // whether the email is registered, so callers cannot probe for accounts.
+  const genericResponse = createResponse(200, {
+    error: false,
+    message: "If that email is registered, a reset link has been sent.",
+  });
+
+  if (!email) {
+    return genericResponse;
   }
 
   const user = await User.findOne({ email });
 
   if (!user) {
-    return createResponse(401, {
+    return genericResponse;
+  }
+
+  const rawToken = crypto.randomBytes(32).toString("hex");
+  const ttlMs =
+    Number(process.env.RESET_TOKEN_TTL_MS) || DEFAULT_RESET_TOKEN_TTL_MS;
+
+  user.resetTokenHash = hashResetToken(rawToken);
+  user.resetTokenExpires = new Date(Date.now() + ttlMs);
+  await user.save();
+
+  const appUrl = process.env.APP_URL || "http://localhost:3000";
+  const link = `${appUrl}/resetpassword?token=${rawToken}&email=${encodeURIComponent(
+    email,
+  )}`;
+
+  await sendPasswordResetEmail(email, link);
+
+  return genericResponse;
+}
+
+export async function resetUserPassword(payload = {}) {
+  const { email, password, token } = payload;
+
+  if (!email || !password || !token) {
+    return createResponse(400, {
       error: true,
-      message: "Invalid credentials",
+      message: "Email, password, and token are required",
     });
   }
 
+  const user = await User.findOne({ email }).select(
+    "+resetTokenHash +resetTokenExpires +password",
+  );
+
+  // Constant failure message for every token check: do not reveal which
+  // condition failed (missing user, missing token, mismatch, or expiry).
+  const invalidTokenResponse = createResponse(400, {
+    error: true,
+    message: "Invalid or expired reset token",
+  });
+
+  if (!user || !user.resetTokenHash || !user.resetTokenExpires) {
+    return invalidTokenResponse;
+  }
+
+  const providedHash = hashResetToken(token);
+
+  if (providedHash !== user.resetTokenHash) {
+    return invalidTokenResponse;
+  }
+
+  if (user.resetTokenExpires.getTime() <= Date.now()) {
+    return invalidTokenResponse;
+  }
+
   user.password = password;
+  // Single-use: clear the token so the same link cannot be replayed.
+  user.resetTokenHash = undefined;
+  user.resetTokenExpires = undefined;
   await user.save();
 
   return createResponse(200, {

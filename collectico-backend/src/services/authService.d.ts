@@ -40,6 +40,11 @@ export function loginUserAccount(payload?: Record<string, unknown>): Promise<{
   };
 }>;
 
+export function requestPasswordReset(payload?: Record<string, unknown>): Promise<{
+  status: number;
+  body: Record<string, unknown>;
+}>;
+
 export function resetUserPassword(payload?: Record<string, unknown>): Promise<{
   status: number;
   body: Record<string, unknown>;

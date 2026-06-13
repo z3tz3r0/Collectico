@@ -1,5 +1,5 @@
 import express from "express";
-import { getUser, registerUser , loginUser, resetPassword, getUserById, logoutUser, verifyToken } from "../controller/usersControllers.js";
+import { getUser, registerUser , loginUser, requestPasswordReset, resetPassword, getUserById, logoutUser, verifyToken } from "../controller/usersControllers.js";
 import { authUser } from "./authMiddleware.js";
 
 const router = express.Router()
@@ -10,7 +10,10 @@ router.post("/register", registerUser)
 // Login User
 router.post("/login", loginUser)
 
-// Reset password
+// Request password reset (public, anti-enumeration)
+router.post("/request-reset", requestPasswordReset)
+
+// Reset password (public, token-gated)
 router.patch("/resetpassword", resetPassword)
 
 // Get users

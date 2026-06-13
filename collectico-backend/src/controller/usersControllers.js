@@ -3,6 +3,7 @@ import {
   getAuthCookieOptions,
   loginUserAccount,
   registerUserAccount,
+  requestPasswordReset as requestPasswordResetAccount,
   resetUserPassword as resetUserPasswordAccount,
   signAuthToken,
 } from "../services/authService.js";
@@ -87,6 +88,22 @@ export const loginUser = async (req, res) => {
       ...responseBody,
       token,
     });
+  } catch (err) {
+    res.status(500).json({
+      error: true,
+      message: "Server error",
+      detail: err.message,
+    });
+  }
+};
+
+//-----RequestPasswordReset-----//
+
+export const requestPasswordReset = async (req, res) => {
+  try {
+    const result = await requestPasswordResetAccount(req.body);
+
+    res.status(result.status).json(result.body);
   } catch (err) {
     res.status(500).json({
       error: true,

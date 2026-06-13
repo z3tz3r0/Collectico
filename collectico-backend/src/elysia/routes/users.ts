@@ -6,6 +6,7 @@ import {
   getAuthCookieOptions,
   loginUserAccount,
   registerUserAccount,
+  requestPasswordReset,
   resetUserPassword,
   signAuthToken,
   verifyAuthToken,
@@ -152,6 +153,20 @@ export function createUsersRoutes(options: UsersRouteOptions) {
           ...responseBody,
           token: signedToken,
         };
+      } catch (error) {
+        return status(
+          500,
+          createServerErrorBody("Server error", error),
+        );
+      }
+    })
+    .post("/request-reset", async ({ body, status }) => {
+      try {
+        const result = await requestPasswordReset(
+          (body as Record<string, unknown>) ?? {},
+        );
+
+        return status(result.status, result.body);
       } catch (error) {
         return status(
           500,
