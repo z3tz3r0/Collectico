@@ -45,12 +45,14 @@ export const useAuthStore = defineStore('auth', () => {
     await resetPasswordRequest(payload)
   }
 
+  // Clears the session only. Navigation is a UI concern owned by the caller (e.g. the navbar logout
+  // control will `await auth.logout()` then `navigateTo('/')`), so the entities-layer store stays
+  // free of Nuxt routing composables and usable outside an app context.
   async function logout() {
     try {
       await logoutRequest()
     } finally {
       setSession(null)
-      await navigateTo('/')
     }
   }
 

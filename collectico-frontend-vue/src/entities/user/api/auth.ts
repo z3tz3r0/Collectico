@@ -29,7 +29,8 @@ export async function registerRequest(payload: RegisterPayload): Promise<void> {
 }
 
 export async function resetPasswordRequest(payload: ResetPasswordPayload): Promise<void> {
-  await useApi()(apiPaths.auth.resetPassword, { method: 'POST', body: payload })
+  // PATCH to match the legacy React contract (api.patch on the resetpassword endpoint).
+  await useApi()(apiPaths.auth.resetPassword, { method: 'PATCH', body: payload })
 }
 
 export async function logoutRequest(): Promise<void> {
