@@ -4,5 +4,6 @@ export type {
   AuthUser,
   LoginCredentials,
   RegisterPayload,
+  RequestResetPayload,
   ResetPasswordPayload,
 } from './model/types'

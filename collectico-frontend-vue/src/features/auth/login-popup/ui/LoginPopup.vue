@@ -43,7 +43,8 @@ async function goToRegister() {
 
 async function goToResetPassword() {
   close()
-  await navigateTo('/resetpassword')
+  // Route to the email-request step, which emails a tokenized link to /resetpassword.
+  await navigateTo('/requestreset')
 }
 </script>
 

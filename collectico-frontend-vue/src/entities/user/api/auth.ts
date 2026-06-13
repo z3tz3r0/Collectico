@@ -1,5 +1,11 @@
 import { apiPaths, useApi } from '@/shared/api/http-client'
-import type { AuthUser, LoginCredentials, RegisterPayload, ResetPasswordPayload } from '../model/types'
+import type {
+  AuthUser,
+  LoginCredentials,
+  RegisterPayload,
+  RequestResetPayload,
+  ResetPasswordPayload,
+} from '../model/types'
 
 // The backend returns the user fields directly, and may return a 200 body carrying { error, message } on a soft failure.
 interface LoginResponse {
@@ -28,8 +34,15 @@ export async function registerRequest(payload: RegisterPayload): Promise<void> {
   await useApi()(apiPaths.auth.register, { method: 'POST', body: payload })
 }
 
+export async function requestResetRequest(payload: RequestResetPayload): Promise<void> {
+  // Step one of the email reset flow: ask the backend to send a tokenized reset link. The response
+  // is intentionally generic (anti-enumeration), so any 2xx is treated as success by the caller.
+  await useApi()(apiPaths.auth.requestReset, { method: 'POST', body: payload })
+}
+
 export async function resetPasswordRequest(payload: ResetPasswordPayload): Promise<void> {
-  // PATCH to match the legacy React contract (api.patch on the resetpassword endpoint).
+  // PATCH to match the legacy React contract (api.patch on the resetpassword endpoint). The payload
+  // now carries the token read from the emailed reset link, which the backend validates server-side.
   await useApi()(apiPaths.auth.resetPassword, { method: 'PATCH', body: payload })
 }
 

@@ -6,6 +6,7 @@ export const apiPaths = {
     login: '/api/users/login',
     logout: '/api/users/auth/logout',
     register: '/api/users/register',
+    requestReset: '/api/users/request-reset',
     resetPassword: '/api/users/resetpassword',
     verifyToken: '/api/users/auth/verify-token',
   },

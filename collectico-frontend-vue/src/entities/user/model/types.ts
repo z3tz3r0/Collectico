@@ -24,9 +24,16 @@ export interface RegisterPayload {
   [key: string]: unknown
 }
 
+export interface RequestResetPayload {
+  email: string
+  [key: string]: unknown
+}
+
 export interface ResetPasswordPayload {
   email: string
-  // New password. The legacy React reset flow PATCHes { email, password }.
+  // New password. The reset flow PATCHes { email, password, token }, where token comes from the
+  // emailed reset link query string and gates the change server-side (anti-enumeration / expiry).
   password: string
+  token: string
   [key: string]: unknown
 }

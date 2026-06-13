@@ -2,10 +2,17 @@ import {
   loginRequest,
   logoutRequest,
   registerRequest,
+  requestResetRequest,
   resetPasswordRequest,
   verifyTokenRequest,
 } from '../api/auth'
-import type { AuthUser, LoginCredentials, RegisterPayload, ResetPasswordPayload } from './types'
+import type {
+  AuthUser,
+  LoginCredentials,
+  RegisterPayload,
+  RequestResetPayload,
+  ResetPasswordPayload,
+} from './types'
 
 // FSD entities/user model: the Pinia auth store. Replaces the legacy React AuthContext.
 export const useAuthStore = defineStore('auth', () => {
@@ -41,6 +48,10 @@ export const useAuthStore = defineStore('auth', () => {
     await registerRequest(payload)
   }
 
+  async function requestPasswordReset(payload: RequestResetPayload) {
+    await requestResetRequest(payload)
+  }
+
   async function resetPassword(payload: ResetPasswordPayload) {
     await resetPasswordRequest(payload)
   }
@@ -71,6 +82,7 @@ export const useAuthStore = defineStore('auth', () => {
     verifyToken,
     login,
     register,
+    requestPasswordReset,
     resetPassword,
     logout,
     openLoginPopup,

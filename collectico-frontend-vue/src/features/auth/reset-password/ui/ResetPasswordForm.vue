@@ -1,16 +1,30 @@
 <script setup lang="ts">
 import { useAuthStore } from '@/entities/user'
 
-// FSD features/auth/reset-password: the password-reset interaction, ported from the legacy React
-// ForgotPassword page. The user supplies their email and a new password. Styling comes with Vuetify later.
+// FSD features/auth/reset-password: step two of the email reset flow. The user arrives via the
+// tokenized link the backend emailed (<APP_URL>/resetpassword?token=<raw>&email=<encoded>), so the
+// token and email come from the route query. The token gates the change server-side. Styling later.
 const auth = useAuthStore()
+const route = useRoute()
 
-const email = ref('')
+// Query values are string | string[] | undefined. Coerce to a single trimmed string safely.
+function firstQueryValue(value: string | string[] | undefined): string {
+  if (Array.isArray(value)) return value[0] ?? ''
+  return value ?? ''
+}
+
+const token = firstQueryValue(route.query.token as string | string[] | undefined)
+const hasToken = computed(() => token.length > 0)
+
+const email = ref(firstQueryValue(route.query.email as string | string[] | undefined))
 const password = ref('')
 const errorMessage = ref<string | null>(null)
 const submitting = ref(false)
 
 function validate(): string | null {
+  if (!hasToken.value) {
+    return 'Invalid or missing reset link. Please request a new one.'
+  }
   if (!email.value || !password.value) {
     return 'Please fill in all fields.'
   }
@@ -26,7 +40,7 @@ async function onSubmit() {
 
   submitting.value = true
   try {
-    await auth.resetPassword({ email: email.value, password: password.value })
+    await auth.resetPassword({ email: email.value, password: password.value, token })
     await navigateTo('/login')
   } catch (e) {
     errorMessage.value = e instanceof Error ? e.message : 'Reset password failed'
@@ -40,16 +54,25 @@ async function onSubmit() {
   <form class="reset-form" @submit.prevent="onSubmit">
     <h2>Reset password</h2>
     <p class="reset-form__hint">If you can't remember your password, let us help you.</p>
+    <p v-if="!hasToken" role="alert" class="reset-form__error">
+      Invalid or missing reset link. Please request a new one.
+    </p>
     <label>
       Email
-      <input v-model="email" type="email" required autocomplete="email" />
+      <input v-model="email" type="email" required autocomplete="email" :disabled="!hasToken" />
     </label>
     <label>
       New password
-      <input v-model="password" type="password" required autocomplete="new-password" />
+      <input
+        v-model="password"
+        type="password"
+        required
+        autocomplete="new-password"
+        :disabled="!hasToken"
+      />
     </label>
-    <p v-if="errorMessage" role="alert" class="reset-form__error">{{ errorMessage }}</p>
-    <button type="submit" :disabled="submitting">
+    <p v-if="errorMessage && hasToken" role="alert" class="reset-form__error">{{ errorMessage }}</p>
+    <button type="submit" :disabled="submitting || !hasToken">
       {{ submitting ? 'Submitting...' : 'Submit' }}
     </button>
   </form>
