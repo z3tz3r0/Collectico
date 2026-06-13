@@ -8,7 +8,10 @@ import { ProductGrid } from '@/widgets/product-grid'
 // FSD page: the auction listing. Auctions are products with auction.isAuction = true. The detail /
 // live-bidding view is a later sub-phase, so cards link to the standard product detail for now.
 const api = useApi()
-const { data, status, error } = useQuery(auctionListQuery(api))
+const { data, status, error, suspense } = useQuery(auctionListQuery(api))
+// Resolve on the server so the result is dehydrated into the SSR payload and the client hydrates
+// without an immediate refetch. Swallow errors so the error branch still renders.
+if (import.meta.server) await suspense().catch(() => {})
 const products = computed(() => data.value ?? [])
 const { searchTerm, sortMethod, results } = useProductSearch(products)
 </script>
@@ -16,7 +19,11 @@ const { searchTerm, sortMethod, results } = useProductSearch(products)
 <template>
   <section class="auctions">
     <h1>Auctions</h1>
-    <ProductSearchBar v-model:searchTerm="searchTerm" v-model:sortMethod="sortMethod" />
+    <ProductSearchBar
+      v-model:searchTerm="searchTerm"
+      v-model:sortMethod="sortMethod"
+      :show-price-sort="false"
+    />
     <p v-if="status === 'pending'">Loading auctions...</p>
     <p v-else-if="status === 'error'">Could not load auctions: {{ (error as Error)?.message }}</p>
     <ProductGrid v-else :products="results" />

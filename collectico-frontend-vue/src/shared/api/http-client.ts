@@ -11,13 +11,14 @@ export const apiPaths = {
     verifyToken: '/api/users/auth/verify-token',
   },
   bids: {
-    detail: (productId: string | number) => `/api/bids/${productId}`,
+    detail: (productId: string | number) => `/api/bids/${encodeURIComponent(String(productId))}`,
   },
   cart: {
     add: '/api/cart/cart-add',
-    clearAfterOrder: (cartId: string | number) => `/api/cart/cart-delete-update/${cartId}`,
+    clearAfterOrder: (cartId: string | number) =>
+      `/api/cart/cart-delete-update/${encodeURIComponent(String(cartId))}`,
     list: '/api/cart/cart-get',
-    remove: (productId: string | number) => `/api/cart/cart-delete/${productId}`,
+    remove: (productId: string | number) => `/api/cart/cart-delete/${encodeURIComponent(String(productId))}`,
   },
   orders: {
     create: '/api/orders',
@@ -27,8 +28,8 @@ export const apiPaths = {
     auctionList: '/api/products/auction',
     byGenre: (genre: string) => `/api/products/genre?genre=${encodeURIComponent(genre)}`,
     create: '/api/products',
-    detail: (productId: string | number) => `/api/products/${productId}`,
-    edit: (productId: string | number) => `/api/products/auth/${productId}`,
+    detail: (productId: string | number) => `/api/products/${encodeURIComponent(String(productId))}`,
+    edit: (productId: string | number) => `/api/products/auth/${encodeURIComponent(String(productId))}`,
     list: '/api/products',
     myProducts: '/api/products/auth/my-products',
   },

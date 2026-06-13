@@ -8,7 +8,10 @@ const route = useRoute()
 const api = useApi()
 const id = computed(() => String(route.params.productId ?? ''))
 
-const { data: product, status, error } = useQuery(productDetailQuery(api, id))
+const { data: product, status, error, suspense } = useQuery(productDetailQuery(api, id))
+// Resolve on the server so the detail is dehydrated into the SSR payload and the client hydrates
+// without an immediate refetch. Swallow errors so the error branch still renders.
+if (import.meta.server) await suspense().catch(() => {})
 
 const priceLabel = computed(() => {
   const n = Number(product.value?.price)

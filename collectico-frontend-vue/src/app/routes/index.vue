@@ -5,11 +5,14 @@ import { apiPaths, useApi } from '@/shared/api/http-client'
 // Phase 0 smoke route: exercises the full chain (vue-query plugin + shared ofetch client + FSD import).
 const api = useApi()
 
-const { data, status, error } = useQuery({
+const { data, status, error, suspense } = useQuery({
   queryKey: ['products', 'list'],
   queryFn: () => api<unknown[]>(apiPaths.products.list),
   retry: false,
 })
+// Resolve on the server so the result is dehydrated into the SSR payload (vue-query does not
+// auto-register onServerPrefetch). Swallow errors so the error branch still renders.
+if (import.meta.server) await suspense().catch(() => {})
 
 const count = computed(() => (Array.isArray(data.value) ? data.value.length : 0))
 </script>

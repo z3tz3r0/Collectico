@@ -15,7 +15,8 @@ function toPrice(value?: string): number {
 
 export function useProductSearch(products: MaybeRefOrGetter<Product[]>) {
   const searchTerm = ref('')
-  const sortMethod = ref<ProductSortMethod>('none')
+  // Default to A-Z so the first render is alphabetized, matching the legacy SortBox / AuctionSort.
+  const sortMethod = ref<ProductSortMethod>('az')
   const debouncedTerm = useDebounce(searchTerm, 250)
 
   const results = computed(() => {

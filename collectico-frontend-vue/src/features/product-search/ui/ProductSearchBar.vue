@@ -2,8 +2,10 @@
 import type { ProductSortMethod } from '../model/use-product-search'
 
 // Controlled search + sort bar. Two-way bound to the refs from useProductSearch via v-model.
+// Price sort is hidden on auctions (they use minBidPrice/currentBid, not price), matching AuctionSort.
+const { showPriceSort = true } = defineProps<{ showPriceSort?: boolean }>()
 const searchTerm = defineModel<string>('searchTerm', { default: '' })
-const sortMethod = defineModel<ProductSortMethod>('sortMethod', { default: 'none' })
+const sortMethod = defineModel<ProductSortMethod>('sortMethod', { default: 'az' })
 </script>
 
 <template>
@@ -15,11 +17,10 @@ const sortMethod = defineModel<ProductSortMethod>('sortMethod', { default: 'none
       aria-label="Search products"
     />
     <select v-model="sortMethod" aria-label="Sort products">
-      <option value="none">Sort</option>
       <option value="az">Title A-Z</option>
       <option value="za">Title Z-A</option>
-      <option value="price-asc">Price low to high</option>
-      <option value="price-desc">Price high to low</option>
+      <option v-if="showPriceSort" value="price-asc">Price low to high</option>
+      <option v-if="showPriceSort" value="price-desc">Price high to low</option>
     </select>
   </div>
 </template>

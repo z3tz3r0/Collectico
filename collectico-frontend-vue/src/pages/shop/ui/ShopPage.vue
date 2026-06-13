@@ -11,7 +11,10 @@ const route = useRoute()
 const api = useApi()
 const genre = computed(() => (typeof route.query.genre === 'string' ? route.query.genre : ''))
 
-const { data, status, error } = useQuery(shopProductsQuery(api, genre))
+const { data, status, error, suspense } = useQuery(shopProductsQuery(api, genre))
+// Resolve on the server so the result is dehydrated into the SSR payload and the client hydrates
+// without an immediate refetch. Swallow errors so the error branch still renders.
+if (import.meta.server) await suspense().catch(() => {})
 const products = computed(() => data.value ?? [])
 const { searchTerm, sortMethod, results } = useProductSearch(products)
 </script>
